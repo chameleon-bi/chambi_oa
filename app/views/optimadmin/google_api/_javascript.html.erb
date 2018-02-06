@@ -1,0 +1,283 @@
+<script>
+// https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/goals/list#auth
+// http://jsbin.com/relufutenuto/2/edit?html,css,js,output
+// https://developers.google.com/analytics/devguides/reporting/core/dimsmets#cats=user,session,related_products,channel_grouping,adsense,audience,doubleclick_campaign_manager,time,custom_variables_or_columns,content_experiments,exceptions,user_timings,social_interactions,ecommerce,event_tracking,app_tracking,site_speed,internal_search,content_grouping,page_tracking,social_activities,system,geo_network,platform_or_device,goal_conversions,adwords,traffic_sources
+// https://developers.google.com/analytics/devguides/reporting/core/dimsmets
+// https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/goals/list
+
+const chartColours = ['#423850', '#5ec4b7', '#b0a377', '#8b9596', '#a29c84', '#b7c2be'];
+var goals = false;
+function listGoals() {
+  <% if ga_account_id.present? && ga_web_property_id.present? %>
+    var request = gapi.client.analytics.management.goals.list({
+    'accountId': '<%= ga_account_id %>',
+    'webPropertyId': '<%= ga_web_property_id %>',
+    'profileId': '<%= ga_profile.split(':').last %>'
+    });
+    goals = true;
+    request.execute(printGoals);
+  <% end %>
+}
+
+/*
+* Example 2:
+* The results of the list method are passed as the results object.
+* The following code shows how to iterate through them.
+*/
+function printGoals(results) {
+  if (results && !results.error) {
+    var goals = results.items;
+    for (var i = 0, goal; goal = goals[i]; i++) {
+      var goalOverview = new gapi.analytics.googleCharts.DataChart({
+        query: {
+          metrics: 'ga:goal' + goal.id + 'Completions',
+          //metrics: 'ga:totalEvents, ga:sessionsWithEvent',
+          dimensions: 'ga:date',
+          'start-date': '30daysAgo',
+          'end-date': 'today',
+          'max-results': 30
+        },
+        chart: {
+          container: 'goal-chart-container-' + goal.id,
+          type: 'LINE',
+          options: {
+            colors: ['#423850', '#5ec4b7'],
+            width: '100%',
+            height: 120
+          }
+        }
+      });
+
+      if(goal.active == true) {
+        $('#invidivual-goals').append('<strong>' + goal.name + ' (goal ' + goal.id + ')</strong>');
+        //$('#invidivual-goals').append('<p>Value: ' + goal.value + ', Type: ' + goal.type + '</p>');
+        $('#invidivual-goals').append('<div id="goal-chart-container-' + goal.id + '">Loading...</div>');
+        setTimeout(function(goalOverview) {
+          goalOverview.set({ query: { ids: '<%= ga_profile %>' } }).execute();
+
+          goalOverview.on('success', function() {
+            equalHeight();
+          });
+
+          equalHeight();
+        }.bind(this, goalOverview), i++ * 500);
+      }
+    }
+  }
+}
+
+gapi.analytics.ready(function () {
+  equalHeight();
+
+  gapi.analytics.auth.authorize({
+    serverAuth: {
+      access_token: $('[data-auth-token]').data('auth-token')
+    }
+  });
+
+  listGoals();
+
+  var monthlyOverview = new gapi.analytics.googleCharts.DataChart({
+    query: {
+      metrics: 'ga:sessions, ga:bounces',
+      dimensions: 'ga:date',
+      'start-date': '30daysAgo',
+      'end-date': 'today',
+      'max-results': 30,
+    },
+    chart: {
+      container: 'monthly-chart-container',
+      type: 'LINE',
+      options: {
+        colors: chartColours,
+        width: '100%',
+        height: '70px'
+      }
+    }
+  });
+
+  monthlyOverview.set({ query: { ids: '<%= ga_profile %>' } }).execute();
+
+  monthlyOverview.on('success', function() {
+    equalHeight();
+  });
+
+  if (goals == true) {
+    $('#analytics-goals, .analytics-goals-navigation').removeClass('hide');
+    var goalOverview = new gapi.analytics.googleCharts.DataChart({
+      query: {
+        metrics: 'ga:goalCompletionsAll',
+        //metrics: 'ga:totalEvents, ga:sessionsWithEvent',
+        dimensions: 'ga:date',
+        'start-date': '30daysAgo',
+        'end-date': 'today',
+        'max-results': 30
+      },
+      chart: {
+        container: 'goal-chart-container',
+        type: 'LINE',
+        options: {
+          colors: chartColours,
+          width: '100%',
+          height: '70px'
+        }
+      }
+    });
+
+    goalOverview.set({ query: { ids: '<%= ga_profile %>' } }).execute();
+
+    goalOverview.on('success', function() {
+      equalHeight();
+    });
+  }
+
+  var yearlyOverview = new gapi.analytics.googleCharts.DataChart({
+    query: {
+      metrics: 'ga:sessions, ga:bounces',
+      dimensions: 'ga:yearMonth',
+      'start-date': '365daysAgo',
+      'end-date': 'today',
+      'max-results': 365,
+    },
+    chart: {
+      container: 'yearly-chart-container',
+      type: 'LINE',
+      options: {
+        colors: chartColours,
+        width: '100%',
+        height: '70px'
+      }
+    }
+  });
+
+  yearlyOverview.set({ query: { ids: '<%= ga_profile %>' } }).execute();
+
+  yearlyOverview.on('success', function() {
+    equalHeight();
+  });
+
+  var monthlyBrowser = new gapi.analytics.googleCharts.DataChart({
+    reportType: 'ga',
+    query: {
+      'dimensions': 'ga:browser',
+      'metrics': 'ga:sessions',
+      'start-date': '30daysAgo',
+      'end-date': 'today',
+    },
+    chart: {
+      type: 'PIE',
+      container: 'monthly-browser-chart-container',
+      options: {
+        colors: chartColours
+      }
+    }
+  });
+  monthlyBrowser.set({ query: { ids: '<%= ga_profile %>' } }).execute();
+
+  monthlyBrowser.on('success', function() {
+    equalHeight();
+  });
+
+  var monthlyDeviceCategory = new gapi.analytics.googleCharts.DataChart({
+    reportType: 'ga',
+    query: {
+      'dimensions': 'ga:deviceCategory',
+      'metrics': 'ga:sessions',
+      'start-date': '30daysAgo',
+      'end-date': 'today',
+    },
+    chart: {
+      type: 'PIE',
+      container: 'monthly-device-category-chart-container',
+      options: {
+        colors: chartColours
+      }
+    }
+  });
+  monthlyDeviceCategory.set({ query: { ids: '<%= ga_profile %>' } }).execute();
+
+  monthlyDeviceCategory.on('success', function() {
+    equalHeight();
+  });
+
+  var monthlyTrafficSources = new gapi.analytics.googleCharts.DataChart({
+    reportType: 'ga',
+    query: {
+      'dimensions': 'ga:source',
+      'metrics': 'ga:sessions',
+      'start-date': '30daysAgo',
+      'end-date': 'today',
+    },
+    chart: {
+      type: 'PIE',
+      container: 'monthly-traffic-sources-chart-container',
+      options: {
+        colors: chartColours
+      }
+    }
+  });
+
+  monthlyTrafficSources.set({ query: { ids: '<%= ga_profile %>' } }).execute();
+
+  monthlyTrafficSources.on('success', function() {
+    equalHeight();
+  });
+
+  var userType = new gapi.analytics.googleCharts.DataChart({
+    reportType: 'ga',
+    query: {
+      'dimensions': 'ga:usertype',
+      'metrics': 'ga:sessions',
+      'start-date': '30daysAgo',
+      'end-date': 'today',
+    },
+    chart: {
+      type: 'PIE',
+      container: 'monthly-user-type-chart-container',
+      options: {
+        colors: chartColours
+      }
+    }
+  });
+
+  userType.set({ query: { ids: '<%= ga_profile %>' } }).execute();
+
+  userType.on('success', function() {
+    equalHeight();
+  });
+
+  /**
+  * Create a new ActiveUsers instance to be rendered inside of an
+  * element with the id "active-users-container" and poll for changes every
+  * five seconds.
+  */
+  var activeUsers = new gapi.analytics.ext.ActiveUsers({
+    container: 'active-users-container',
+    pollingInterval: 5
+  });
+
+  activeUsers.once('success', function () {
+    var element = this.container.firstChild;
+    var timeout;
+
+    this.on('change', function (data) {
+      var element = this.container.firstChild;
+      var animationClass = data.delta > 0 ? 'is-increasing' : 'is-decreasing';
+      element.className += (' ' + animationClass);
+
+      clearTimeout(timeout);
+      timeout = setTimeout(function () {
+        element.className =
+          element.className.replace(/ is-(increasing|decreasing)/g, '');
+      }, 3000);
+    });
+  });
+
+  activeUsers.set({ ids: '<%= ga_profile %>' }).execute();
+
+});
+$(window).load(function() {
+  console.log('test');
+  equalHeight();
+});
+</script>

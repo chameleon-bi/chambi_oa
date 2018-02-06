@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Image Uploader</title>
+	<script type="text/javascript" src="/assets/manticore/tiny_mce/tiny_mce_popup.js"></script>
+	<script type="text/javascript" src="/assets/manticore/jquery.min.js"></script>
+	
+	<style>
+    div.field_with_errors { display: inline; }
+  </style>
+</head>
+<body>
+
+<% if @saved -%>
+    
+  <h3>Image Uploaded</h3>
+  
+  <form action='/admin/images/upload?skip_save=true' method='post'>
+    <div class="mceActionPanel">
+      <%= submit_tag "Upload Another", :id => "insert", :name => "insert", :onclick => "$('#form').submit();" %>
+      <%= submit_tag "Close", :id => "cancel", :name => "cancel", :onclick => "tinyMCEPopup.close();" %>
+    </div>
+  </form>
+  
+<% else -%>
+
+  <%= form_for @image, :url => "/admin/images/upload", :method => :post, :html => {:multipart => true} do |f| -%>
+  
+    <% unless params[:skip_save] -%>
+      <% if @image.errors.any? %>  
+        <div class="error_messages">
+          <h3>Problem with upload:</h3>
+          <ul>
+            <% for message in @image.errors.full_messages %>  
+              <li><%= message %></li>  
+            <% end %>  
+          </ul> 
+        </div>  
+      <% end %>  
+    <% end -%>  
+
+    <div>
+      Image: 
+      <%= f.file_field :image %>
+      <%= f.hidden_field :image_cache %>
+    </div>
+    <br />
+    <div>
+      Name: 
+      <%= f.text_field :name %>
+    </div>
+    
+    <div class="mceActionPanel">
+      <%= f.submit "Upload", :id => "insert", :name => "insert", :onclick => "$('#form').submit();" %>
+      <%= f.submit "Cancel", :id => "cancel", :name => "cancel", :onclick => "tinyMCEPopup.close();" %>
+	  </div>
+
+  <% end -%>
+  
+<% end -%>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+<%= render 'optimadmin/shared/header/main_title', title: "Edit #{@menu_item.menu_name.humanize} Menu Item" %>
+
+<div class="main-content">
+  <%= render 'optimadmin/shared/module/form/back', path: menu_items_path, title: 'Menu Item' %>
+
+  <%= render 'form' %>
+</div>

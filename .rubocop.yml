@@ -1,0 +1,11 @@
+Metrics/LineLength:
+  Max: 150
+
+AllCops:
+  Exclude:
+    - 'test/test_helper.rb'
+    - 'test/dummy/bin/*'
+    - 'test/dummy/db/**/*'
+    - 'db/**/*'
+    - 'optimadmin.gemspec'
+    - 'Rakefile'

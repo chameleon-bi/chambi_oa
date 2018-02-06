@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html> <!--<![endif]-->
+  <head>
+    <%= render 'layouts/optimadmin/shared/head' %>
+  </head>
+
+  <body>
+    <div data-equalizer="main">
+      <div class="content-left <%= "hide" if cookies[:optimadmin_iframe].present? %>" data-equalizer-mq="large" data-equalizer-watch="main">
+        <% # TODO: Make this the site logo %>
+        <%= link_to ( image_tag 'optimadmin/logo.png', alt: 'Optimised Admin System', width: 220, height: 54 ), root_url, class: 'logo text-center' %>
+
+        <%= render(
+          partial: 'optimadmin/shared/sidebar/module_links'
+        ) %>
+      </div>
+
+      <div class="<%= cookies[:optimadmin_iframe].present? ? 'iframe-content' : 'content-right' %>" data-equalizer-watch="main">
+        <%= render 'layouts/optimadmin/application/header' %>
+
+        <%= yield %>
+      </div>
+    </div>
+
+    <%= render 'layouts/optimadmin/application/footer' %>
+
+    <%= yield :footer %>
+
+    <%= javascript_include_tag 'optimadmin/vendor/jquery.multiple-select' %>
+    <%= javascript_include_tag 'optimadmin/layout/footer' %>
+  </body>
+</html>

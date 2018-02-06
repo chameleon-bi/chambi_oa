@@ -1,0 +1,3 @@
+$("#optimadmin_images_for_<%= @image_name %>").html(
+  "<%= escape_javascript(render 'optimadmin/images/image_collection', :image => @image_name ) %>"
+);

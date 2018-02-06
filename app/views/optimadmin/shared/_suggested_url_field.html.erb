@@ -1,0 +1,9 @@
+<div class="field">
+  <%= f.label :suggested_url %>
+  <%= module_tooltip(
+      'search engine friendly URL',
+      'This field allows you to customise the URL for search engines. You can leave it blank for it to be automatically generated.'
+      )
+  %><br />
+  <%= f.text_field :suggested_url %>
+</div>

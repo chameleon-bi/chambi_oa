@@ -1,0 +1,16 @@
+<% if params[:colorbox].present? %>
+  <%= content_for :head do %>
+    <script>
+        $(window).load(function() {
+          $('head script, .main-title, .content-left, footer').remove();
+          $('.back').parent().parent().remove();
+          $('.main-content').attr('style', 'padding-top:0; padding-bottom:0;');
+          parent.$.colorbox.resize({
+            width: '1000px',
+            height: $('body').height()
+          });
+          $('[data-equalizer-watch]').matchHeight();
+        });
+    </script>
+  <% end %>
+<% end %>

@@ -1,0 +1,22 @@
+<%= form_tag( {}, { method: 'get', class: 'search-form' } ) do %>
+  <div class="row collapse">
+
+      <div class="field">
+        <%= text_field_tag :search, params[:search], placeholder: 'Search' %>
+      </div>
+
+      <% if defined? additional_query_string %>
+        <% additional_query_string.each do |key, value| %>
+          <%= hidden_field_tag key, value %>
+        <% end %>
+      <% end %>
+
+      <%= hidden_field_tag :order, params[:order] %>
+      <div class="actions">
+        <%= button_tag type: 'submit' do %>
+        <%= octicon('search').html_safe %>
+        <% end %>
+      </div>
+
+  </div>
+<% end %>

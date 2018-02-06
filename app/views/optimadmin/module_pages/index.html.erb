@@ -1,0 +1,20 @@
+<%= render 'optimadmin/shared/header/main_title', title: 'Manage Module Pages' %>
+
+<div class="main-content">
+  <%= render 'optimadmin/shared/module/form/back', path: menu_items_path, title: 'Manage Menu', prefix: 'Back to' %>
+
+  <%= render 'optimadmin/shared/module/index/new_item', title: 'Module Page', object: Optimadmin::ModulePage, path: new_module_page_path %>
+
+  <div class="row collapse module-list-index header">
+    <%= list_item 'large-5 small-5' do 'Name' end %>
+
+    <%= list_item 'large-5 small-5' do 'Route' end %>
+
+    <%= list_item { 'Edit' } %>
+
+    <%= list_item 'large-1 hide-for-medium-down text-center last' do 'Delete' end %>
+  </div>
+
+
+  <%= render_object @module_pages %>
+</div>

@@ -1,0 +1,27 @@
+<div class="row collapse module-list-index <%= cycle('odd', 'even') %>" data-equalizer="module-list" id="item_<%= administrator.id %>">
+  <div class="large-1 small-2 columns" data-equalizer-watch="module-list">
+    <%= detail_toggle_link(object: administrator) %>
+  </div>
+
+  <div class="large-3 small-5 columns" data-equalizer-watch="module-list">
+    <%= administrator.username %>
+  </div>
+
+  <div class="large-6 small-5 columns" data-equalizer-watch="module-list">
+    <%= mail_to administrator.email %>
+  </div>
+
+  <div class="large-1 small-4 columns" data-equalizer-watch="module-list">
+    <%= edit_link(object: administrator) %>
+  </div>
+
+  <div class="large-1 hide-for-medium-down columns last" data-equalizer-watch="module-list">
+    <%= destroy_link(object: administrator) %>
+  </div>
+
+  <div class="row module-list-detail hide" id="index-list-<%= administrator.id %>">
+    <div class="small-12 columns module-list-summary last">
+      <%= administrator.username %>
+    </div>
+  </div>
+</div>

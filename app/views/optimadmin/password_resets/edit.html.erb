@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="large-4 small-12 large-centered columns">
+    <h1>Reset Password</h1>
+
+    <%= form_for @administrator, url: password_reset_path(params[:id]) do |f| %>
+      <div class="fields">
+        <% if @administrator.errors.any? %>
+          <div class="error_messages">
+            <h2><%= pluralize(@administrator.errors.count, 'count') %> have prevented this administrator password from being reset</h2>
+            <ul>
+              <% for message in @administrator.errors.full_messages %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <div class="field">
+          <%= f.label :password %>
+          <%= f.password_field :password, required: 'true' %>
+        </div>
+        <div class="field">
+          <%= f.label :password_confirmation %>
+          <%= f.password_field :password_confirmation, required: 'true' %>
+        </div>
+      </div>
+      <div class="actions">
+        <%= f.submit 'Update Password' %>
+      </div>
+    <% end %>
+  </div>
+</div>

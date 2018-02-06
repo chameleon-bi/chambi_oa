@@ -1,0 +1,10 @@
+<div class="row collapse">
+  <div class="large-10 small-12 columns">
+    <div class="back">
+      <%= link_to path do %>
+        <%= octicon('chevron-left') %>
+        <%= defined?(prefix) ? prefix : 'See All' %> <%= title.pluralize %>
+      <% end %>
+    </div>
+  </div>
+</div>

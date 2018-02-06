@@ -1,0 +1,16 @@
+@import '../lib/mixins', '../lib/variables', 'additional_reset', 'inline_editing';
+
+.image-left {
+  float: left;
+  margin: em(16px) em(16px) em(16px) 0;
+}
+
+.image-right {
+  float: right;
+  margin: em(16px) 0 em(16px) em(16px);
+}
+
+// This wrapper ensures that they're exclusive to TinyMCE, use alongside .content
+.mce-content-body {
+
+}

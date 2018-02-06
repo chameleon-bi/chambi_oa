@@ -1,0 +1,102 @@
+@import '../lib/mixins', '../lib/variables';
+
+// Clarification: this is used for the navigation 'module'
+
+/*
+.menu-item-control {
+  margin-left: em(10px);
+}
+*/
+
+.drag-helper {
+  background: image-url('optimadmin/draggable-icon.png') no-repeat left 4px;
+  display: none;
+  height: 16px;
+  width: 16px;
+}
+
+.menu-items-list {
+  border-color: $optimadmin-original-grey;
+  border-top-style: solid;
+  border-top-width: 1px;
+  margin: 0 0 em(20px);
+
+  ul ul {
+    margin-left: em(5px);
+  }
+
+  &.navigation-sortable {
+    overflow-y: hidden;
+  }
+}
+
+.menu-item {
+  list-style: none;
+
+  &.ui-sortable-handle {
+    cursor: move;
+
+    .drag-helper {
+      display: inline-block;
+    }
+  }
+
+  .module-list-index {
+    border-top: 1px solid $optimadmin-original-grey;
+    overflow: hidden;
+
+    .columns {
+      border-left: 1px solid $optimadmin-original-grey;
+      font-size: em(12px);
+      padding: em(10px) em(5px);
+
+      &:first-of-type {
+        border-left: 0;
+      }
+    }
+  }
+
+  .disabled span {
+    opacity: .25;
+  }
+
+  .dead-link {
+    color: $optimadmin-original-purple;
+    font-weight: bold;
+  }
+}
+
+.inline-navigation {
+  background: $optimadmin-slate-green;
+  font-size: em(12px);
+  line-height: 1.25;
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
+
+  li {
+    float: left;
+  }
+
+  a {
+    display: block;
+    padding: em(5px, 12px) em(10px, 12px);
+
+    @include responsive-to(medium) {
+      padding: em(6px, 12px);
+    }
+
+    &:active,
+    &:focus {
+      color: $optimadmin-offset-black;
+    }
+  }
+
+  &.sticky {
+    position: fixed;
+    top: 0;
+    z-index: 100;
+  }
+}

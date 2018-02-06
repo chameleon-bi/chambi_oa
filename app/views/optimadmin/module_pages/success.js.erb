@@ -1,0 +1,4 @@
+if($('#menu_item_link_attributes_menu_resource_type').val() == 'Optimadmin::ModulePage') {
+  $('#menu_item_link_attributes_menu_resource_type').change();
+}
+$('#new_module_page').replaceWith("<%= j render 'optimadmin/module_pages/remote_form' %>")

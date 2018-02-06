@@ -1,0 +1,95 @@
+<%= form_for @menu_item do |f| %>
+  <%= f.hidden_field :menu_name %>
+
+  <% if @menu_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@menu_item.errors.count, "error") %> prohibited this menu item from being saved:</h2>
+
+      <ul>
+        <% @menu_item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= field_set_tag 'Menu Item' do %>
+
+    <div class="field">
+      <%= f.label :name %><br/>
+      <%= f.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :title_attribute %>
+      <%= f.text_field :title_attribute %>
+    </div>
+
+    <div class="field">
+      <%= f.label :parent_id %>
+      <%= f.select :parent_id, options_for_select(@menu_items.reject { |x| x == @menu_item }.map { |c| ['- ' * c.depth + c.name, c.id] }, selected: @menu_item.parent_id), include_blank: true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :new_window, "Open in a new window" %><br/>
+      <%= f.check_box :new_window %>
+    </div>
+
+    <% if current_administrator.role == 'master' %>
+      <div class="field">
+        <%= f.label :deletable %><br />
+        <%= f.check_box :deletable, checked: @menu_item.deletable || (true if @menu_item.new_record?) %>
+      </div>
+    <% end %>
+
+    <% if Optimadmin::MenuItem.column_names.include? 'display' %>
+      <div class="field">
+        <%= f.label :display %><br />
+        <%= f.check_box :display %>
+      </div>
+    <% end %>
+
+  <% end %>
+
+  <%= field_set_tag 'Link' do %>
+    <%= f.fields_for :link do |link_fields| %>
+      <%= render 'link_form', f: link_fields %>
+    <% end %>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<hr />
+
+<div class="row collapse">
+  <% if can? :manage, Optimadmin::ModulePage %>
+    <div class="large-3 columns">
+      <div class="back">
+        <%= link_to '#new-module-page-form', class: 'toggle-class', data: { class: 'hide', container: '#new-module-page-form', return: 'true' } do %>
+          <%= octicon('file-text') %>
+          New Module Page
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="large-4 end columns">
+    <div class="back">
+      <%= link_to '#new-external-link-form', class: 'toggle-class', data: { class: 'hide', container: '#new-external-link-form', return: 'true' } do %>
+        <%= octicon('link-external') %>
+        New External Link
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="hide" id="new-module-page-form">
+  <%= render 'optimadmin/module_pages/remote_form' %>
+</div>
+
+<div class="hide" id="new-external-link-form">
+  <%= render 'optimadmin/external_links/remote_form' %>
+</div>

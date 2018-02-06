@@ -1,0 +1,88 @@
+@import '../lib/mixins', '../lib/variables';
+header {
+  background: $optimadmin-purple;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+
+
+
+.logo {
+  background: $optimadmin-original-white;
+  display: block;
+  padding: 0 em(10px);
+
+  @include responsive-to(large) {
+    height: 104px;
+  }
+
+  img {
+    margin: em(5px) 0;
+
+    @include responsive-to(large) {
+      margin: em(25px) 0 em(5px);
+    }
+  }
+}
+
+.generic-links {
+  ul {
+    list-style: none;
+    width: 100%;
+  }
+
+  li {
+    display: block;
+    float: left;
+    margin: 0;
+  }
+
+  a {
+    color: $optimadmin-white;
+    display: block;
+    font-size: em(12px);
+    padding: em(9px, 12px);
+    text-decoration: none;
+    transition: all .25s;
+
+    &:link,
+    &:visited {
+      color: $optimadmin-white;
+    }
+
+    &:hover,
+    &.active {
+      background: $optimadmin-original-pastel-purple;
+      color: $optimadmin-white;
+    }
+
+    &.active {
+      background-image: image-url('optimadmin/active-navigation-icon.png');
+      background-repeat: no-repeat;
+      background-position: bottom center;
+    }
+  }
+}
+
+.main-title {
+  background: $optimadmin-original-pastel-purple;
+  //border-top: 2px solid $optimadmin-green;
+  padding: em(15px);
+  position: relative;
+  top: -2px;
+  z-index: 1;
+
+  @include responsive-to(medium-down) {
+    padding: em(10px) em(20px);
+  }
+
+  h1 {
+    color: $optimadmin-white;
+    font-size: em(26px);
+    font-weight: normal;
+    line-height: 1;
+    padding: 0;
+    margin: 0;
+  }
+}

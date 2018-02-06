@@ -1,0 +1,11 @@
+<html>
+  <head>
+    <script type="text/javascript">
+      parent.$('.mce-image-url-input input').val('<%= @image.image.url %>');
+      parent.$('input.mce-image-alt-input').first().val('<%= @image.name %>');
+      parent.$('.mce-image-width-input').val('<%= FastImage.size(@image.image.file.file)[0] %>');
+      parent.$('.mce-image-height-input').val('<%= FastImage.size(@image.image.file.file)[1] %>');
+      parent.tinymce.activeEditor.windowManager.getWindows()[1].close();
+    </script>
+  </head>
+</html>

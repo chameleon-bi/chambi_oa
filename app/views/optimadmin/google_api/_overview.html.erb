@@ -1,0 +1,106 @@
+<%= content_for :footer do %>
+  <%= javascript_include_tag 'optimadmin/layout/dashboard' %>
+  <%= javascript_include_tag 'optimadmin/vendor/google_api/load_analytics' %>
+  <script src="https://ga-dev-tools.appspot.com/public/javascript/embed-api/components/active-users.js"></script>
+  <%#= javascript_include_tag 'optimadmin/vendor/google_api/overview' %>
+  <%= render partial: 'optimadmin/google_api/javascript',
+             locals: {
+              ga_profile: ga_profile,
+              ga_account_id: ga_account_id,
+              ga_web_property_id: ga_web_property_id
+            } %>
+<% end %>
+
+
+<ul class="inline-navigation">
+  <li><%= link_to 'Active users', '#active-users-container' %></li>
+  <li><%= link_to 'Monthly sessions', '#monthly-chart-container' %></li>
+  <li><%= link_to 'Traffic sources', '#monthly-traffic-sources-chart-container' %></li>
+  <li><%= link_to 'Goals', '#analytics-goals', class: 'analytics-goals-navigation hide' %></li>
+  <li><%#= link_to 'Browser', '#monthly-browser-chart-container' %></li>
+  <li><%#= link_to 'Device type', '#monthly-device-category-chart-container' %></li>
+  <li><%= link_to 'User type', '#monthly-user-type-chart-container' %></li>
+  <li><%= link_to 'Yearly overview', '#yearly-chart-container' %></li>
+  <li><%= link_to 'Google Analytics', 'https://analytics.google.com/', target: '_blank', rel: 'noopener' %></li>
+</ul>
+
+<p>This Dashboard shows your current statistics. The 'Active Users' section is automatically refreshed every four seconds.</p>
+
+<div id="active-users-container" data-auth-token="<%= @auth_token %>"></div>
+
+<hr />
+
+<strong>30 days overview - sessions</strong>
+
+<div id="monthly-chart-container" data-auth-token="<%= @auth_token %>"></div>
+
+<%= link_to "#{octicon('info')}more information".html_safe, '#monthly-chart-container', class: 'toggle-class', data: { class: 'hide', container: '.monthly-chart-container', return: 'false' } %>
+
+<p class="monthly-chart-container hide">
+  The graph above shows your visitor sessions for the past 30 days. The bounces are those sessions who only visited a single page.
+</p>
+
+<hr />
+
+<div id="analytics-goals" class="hide">
+  <div>
+    <strong>30 days overview - goals</strong>
+  </div>
+
+  <div id="goal-chart-container" data-auth-token="<%= @auth_token %>"></div>
+
+  <%= link_to "#{octicon('info')}more information".html_safe, '#monthly-chart-container', class: 'toggle-class', data: { class: 'hide', container: '.goal-chart-container', return: 'false' } %>
+
+  <p class="goal-chart-container hide">
+    The graph above shows your goals for the past 30 days. Goal completions are those who have completed a specific goal. Goal conversation rate is the amount of sessions compared to those who have completed a goal.
+  </p>
+
+  <div id="invidivual-goals">
+
+  </div>
+
+  <hr />
+</div>
+
+
+<div class="row collapse">
+  <div class="large-6 columns">
+    <strong>Traffic sources</strong>
+
+    <div id="monthly-traffic-sources-chart-container" data-auth-token="<%= @auth_token %>"></div>
+
+    <%= link_to "#{octicon('info')}more information".html_safe, '#monthly-traffic-sources-chart-container', class: 'toggle-class',
+    data: { class: 'hide', container: '.monthly-traffic-sources-chart-container', return: 'false' } %>
+
+    <p class="monthly-traffic-sources-chart-container hide">
+      Traffic sources are shown here. These are websites that refer users to yours.
+    </p>
+  </div>
+
+  <div class="large-6 columns">
+    <strong>User type</strong>
+    <div id="monthly-user-type-chart-container" data-auth-token="<%= @auth_token %>"></div>
+
+    <%= link_to "#{octicon('info')}more information".html_safe, '#monthly-user-type-chart-container', class: 'toggle-class',
+    data: { class: 'hide', container: '.monthly-user-type-chart-container', return: 'false' } %>
+
+    <p class="monthly-user-type-chart-container hide">
+      This area shows whether the user has visited your website before.
+    </p>
+  </div>
+</div>
+
+<hr />
+
+<strong>Yearly overview</strong>
+
+<div id="yearly-chart-container" data-auth-token="<%= @auth_token %>"></div>
+
+<%= link_to "#{octicon('info')}more information".html_safe, '#yearly-chart-container', class: 'toggle-class', data: { class: 'hide', container: '.yearly-chart-container', return: 'false' } %>
+
+<p class="yearly-chart-container hide">
+  The graph above shows your visitor sessions for the past 365 days.
+  The bounces are those sessions who only visited a single page.
+
+  The format of '201501' is the year, then the month. For example, '201501' is January 2015.
+</p>

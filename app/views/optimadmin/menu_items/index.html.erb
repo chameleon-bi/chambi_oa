@@ -1,0 +1,84 @@
+<%= render 'optimadmin/shared/header/main_title', title: 'Manage Site Navigation (Menus)' %>
+
+<div class="main-content">
+  <div class="row collapse">
+    <div class="large-4 columns">
+      <div class="back">
+        <%= link_to reorder_menu_items_path do %>
+          <%= octicon('settings') %>
+          Reorder Menu Items
+        <% end %>
+      </div>
+    </div>
+
+    <% if can?(:manage, Optimadmin::ModulePage) %>
+      <div class="large-4 columns">
+        <div class="back">
+          <%= link_to module_pages_path do %>
+            <%= octicon('file-text') %>
+            Manage Module Pages
+          <% end %>
+        </div>
+      </div>
+
+      <div class="large-4 columns">
+        <div class="back">
+          <%= link_to external_links_path do %>
+            <%= octicon('link-external') %>
+            Manage Exernal Links
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+
+  <% @menus.each_with_index do |menu, index| %>
+    <h2><%= menu.humanized_name %></h2>
+
+    <div class="row collapse">
+      <div class="small-6 columns">
+        <%= render 'optimadmin/shared/module/index/new_item', title: 'Menu Item', object: Optimadmin::MenuItem, path: new_menu_item_path(menu_name: menu.name) %>
+      </div>
+
+      <div class="large-6 columns">
+        <%= form_tag do %>
+          <div class="row">
+            <div class="large-5 columns">
+              <%= label_tag :menu_item_id, "Select a link from the drop down to edit" %>
+            </div>
+
+            <div class="large-7 columns">
+              <%= select_tag :menu_item_id, options_for_select(ancestry_options(menu.menu_items(show_all: true))),
+              class: 'navigation-quick-select searchable-select', prompt: 'Please select' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+
+    <% if menu.menu_items.blank? %>
+      <p>This menu doesn't have any menu items yet. Use the button above to create one.</p>
+    <% end %>
+
+    <div class="menu-items-list">
+      <div class="row collapse module-list-index header">
+
+      <%= list_item 'small-6' do 'Menu item' end %>
+
+      <%= list_item 'small-3' do 'Resource type' end %>
+
+      <%= list_item { 'View' } %>
+
+      <%= list_item { 'Edit' } %>
+
+      <%= list_item { 'Delete' } %>
+      </div>
+
+      <ul>
+        <%= nested_admin_menu_items(menu_items: menu.menu_items(show_all: true)) %>
+      </ul>
+    </div>
+  <% end %>
+</div>

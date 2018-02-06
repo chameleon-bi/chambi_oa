@@ -1,0 +1,58 @@
+<div class="document-field">
+
+  <strong><%= f.label document %></strong><br />
+
+  <% if f.object.send("#{document.to_s}?") %>
+    <p>
+      <%= link_to f.object.send(document).url, f.object.send(document).url %>
+    </p>
+
+    <p>
+      <%= link_to "Remove or replace", '#', class: 'toggle-class alter-file-link', data: { container: "#alter_#{document.to_s}", class: 'hide', return: 'false' } %>
+    </p>
+
+    <div id="alter_<%= document.to_s %>" class="hide">
+      <div class="row collapse">
+        <div class="small-4 columns">
+          <%= f.label document, 'Replace File' %>
+          <%= f.file_field document %>
+          <%= f.hidden_field "#{document.to_s}_cache" %>
+        </div>
+
+        <div class="small-4 columns end">
+          <%= f.label "remove_#{document.to_s}", 'Remove Document?' %>
+          <%= f.check_box "remove_#{document.to_s}" %>
+        </div>
+      </div>
+
+      <% document_collection = Optimadmin::Document.all.map{ |x| [ x.name,  request.protocol + request.host_with_port + x.url ] } %>
+
+      <% unless document_collection.blank? %>
+        <p>
+          <%= f.label "remote_#{document}_url", 'From Existing' %>
+          <br />
+          <%= f.select "remote_#{document}_url", document_collection, include_blank: true %>
+        </p>
+      <% end %>
+    </div>
+  <% else %>
+
+    <p>
+      <%= f.label document, 'Upload File' %>
+      <br />
+      <%= f.file_field document %>
+      <%= f.hidden_field "#{document.to_s}_cache" %>
+    </p>
+
+    <% document_collection = Optimadmin::Document.all.map{ |x| [ x.name,  request.protocol + request.host_with_port + x.url ] } %>
+
+    <% unless document_collection.blank? %>
+      <p>
+        <%= f.label "remote_#{document}_url", 'From Existing' %>
+        <br />
+        <%= f.select "remote_#{document}_url", document_collection, include_blank: true %>
+      </p>
+    <% end %>
+
+  <% end %>
+</div>

@@ -1,0 +1,10 @@
+<div class="datepicker-field">
+  <%= f.label date %>
+  <% if f.object.new_record? || (f.object.send(date).blank? && required?(f.object, date)) %>
+    <%= f.text_field date, class: 'datepicker', value: Date.today.strftime("%d-%m-%Y") %>
+  <% elsif f.object.send(date).present? %>
+    <%= f.text_field date, class: 'datepicker', value: "#{f.object.send(date).to_datetime.strftime("%d-%m-%Y")}" %>
+  <% else %>
+    <%= f.text_field date, class: 'datepicker' %>
+  <% end %>
+</div>

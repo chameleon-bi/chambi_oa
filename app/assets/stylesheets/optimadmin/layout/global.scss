@@ -1,0 +1,32 @@
+@import '../lib/mixins', '../lib/variables';
+body {
+  overflow-y: scroll;
+}
+
+.content-left {
+  @include responsive-to(large) {
+    background: $optimadmin-purple;
+    float: left;
+    width: 17%;
+  }
+
+  .content-categories-list {
+    padding: em(18px);
+  }
+}
+
+.content-right {
+  @include responsive-to(large) {
+    float: left;
+    width: 83%;
+  }
+
+  .row.collapse {
+    margin: 0;
+  }
+}
+
+.main-content {
+  max-width: 62.5em;
+  padding: em(28px);
+}

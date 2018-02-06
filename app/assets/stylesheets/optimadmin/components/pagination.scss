@@ -1,0 +1,38 @@
+@import '../lib/mixins', '../lib/variables';
+
+.pagination {
+  margin: em(20px) 0 0;
+  text-align: left;
+
+  a {
+    background: $optimadmin-original-purple;
+    color: $optimadmin-original-white;
+    display: inline-block;
+    padding: em(5px) em(15px);
+    text-decoration: none;
+
+    &:link,
+    &:visited {
+      color: $optimadmin-original-white;
+    }
+
+    &:hover,
+    &:active {
+      background: $optimadmin-original-pastel-purple;
+    }
+  }
+
+  .current {
+    background: $optimadmin-original-pastel-purple;
+    box-shadow: 0 0 5px -1px $optimadmin-faded-black;
+    color: $optimadmin-original-white;
+    display: inline-block;
+    padding: em(5px) em(15px);
+    text-decoration: none;
+  }
+}
+
+.pagination-information {
+  font-size: em(12px);
+  margin: em(5px, 12px) 0;
+}

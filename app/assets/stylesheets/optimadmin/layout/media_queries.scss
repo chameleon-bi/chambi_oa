@@ -1,0 +1,28 @@
+@import '../lib/mixins', '../lib/variables';
+// These are defined via a mixin. It's still importatn to use these as
+// Foundation tends to block elements out when using visibility classes
+// so these save extra mark up
+
+.less-than-desktop-only {
+  display: none;
+}
+
+@include responsive-to(small) {
+  .desktop-only {
+    display: none;
+  }
+
+  .less-than-desktop-only {
+    display: inherit;
+  }
+}
+
+@include responsive-to(medium) {
+  .desktop-only {
+    display: none;
+  }
+
+  .less-than-desktop-only {
+    display: inherit;
+  }
+}

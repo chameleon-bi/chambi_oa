@@ -1,0 +1,59 @@
+<%= content_for :head do %>
+  <%= javascript_include_tag 'optimadmin/components/image_crops.js' %>
+
+  <% if params[:colorbox].present? %>
+  <script>
+    $(document).ready(function() {
+      $('head script, .main-title, .content-left, footer').remove();
+      $('.back').parent().parent().remove();
+      var imageCrop = getQueryString('image_crop');
+      var imageName = getQueryString('image_name');
+      $('#' + imageName + '-version').click();
+      $('#' + imageCrop + '-crop').click();
+      $('.image-crops-header').remove();
+      $('.main-content').attr('style', 'padding-top:0; padding-bottom:0;');
+      parent.$.colorbox.resize({width: '1024px', height: '90%'});
+    });
+    </script>
+  <% end %>
+<% end %>
+
+<%= render 'optimadmin/shared/header/main_title', title: "Edit Crops for #{@image_name.to_s.titleize}" %>
+
+<div class="main-content">
+  <div class="image-crops-header">
+    <% if @image_names and @image_names.length > 1 %>
+      <ul class="edit-versions-list">
+          <% @image_names.each do |name| %>
+            <li>
+              <%= link_to url_for(params.merge(image_name: name)), class: "#{ params[:image_name] == name || (params[:image_name].blank? && name == @image_names.first) ? 'active' : 'inactive'}", id: "#{name.to_s}-version" do %>
+                Edit Versions for <strong><%= name.to_s.titleize %></strong>
+              <% end %>
+            </li>
+          <% end %>
+      </ul>
+
+      <%= module_tooltip('What does "Edit Versions for" mean?', "Each version corresponds to an image upload under the 'Media' tab of this module and allows you to select the image to edit the crops for.") %>
+    <% end %>
+
+    <%= render 'optimadmin/crops_images_for/image_key_navigation' %>
+  </div>
+
+  <div class="image-crop-area">
+    <% @current_image_versions.each_pair do |key, image| %>
+      <% if @image_options[@image_name] and @image_options[@image_name][key] %>
+        <% if @image_options[@image_name][key].first.to_s == "fill" %>
+          <%= render 'optimadmin/crops_images_for/edit_image_fill', key: key, image: image %>
+        <% elsif @image_options[@image_name][key].first.to_s == "fit" %>
+          <%= render 'optimadmin/crops_images_for/edit_image_fit', key: key, image: image, width: @image_options[@image_name][key][1], height: @image_options[@image_name][key][2] %>
+        <% else %>
+          <%= render 'optimadmin/crops_images_for/edit_image_default', key: key, image: image, width: @image_options[@image_name][key][1], height: @image_options[@image_name][key][2]  %>
+        <% end %>
+      <% else %>
+        <%= render 'optimadmin/crops_images_for/edit_image_default', key: key, image: image %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%= link_to 'Done', :back, class: 'action-button' %>
+</div>

@@ -1,0 +1,109 @@
+@import '../lib/mixins', '../lib/variables';
+.content-categories-toggle,
+.logout-link {
+  background: $optimadmin-original-purple;
+  color: $optimadmin-original-white;
+  display: block;
+  padding: em(5px);
+  //margin: 0 0 em(20px);
+  text-decoration: none;
+  transition: all .25s;
+
+  @include responsive-to(medium-down) {
+    font-size: em(12px);
+  }
+
+  &:link,
+  &:visited {
+    color: $optimadmin-original-white;
+  }
+
+  &:hover,
+  &:active {
+    background: $optimadmin-original-pale-purple;
+    color: $optimadmin-original-white;
+  }
+
+  .octicon {
+    font-size: em(19px);
+    margin-right: em(7px, 19px);
+  }
+
+  &.content-categories-toggle-visiblity {
+    background: $optimadmin-original-pale-purple;
+    border-bottom: 1px solid $optimadmin-original-purple;
+    color: $optimadmin-original-white;
+    margin: 0;
+  }
+}
+
+
+
+@include responsive-to(medium-down) {
+  .content-categories-toggle {
+    border-right: 1px solid $optimadmin-original-pale-purple;
+  }
+
+  .content-categories {
+    display: none;
+
+    &.content-categories-toggle-visiblity {
+      background: $optimadmin-original-green;
+      display: block;
+      text-align: left;
+    }
+  }
+}
+
+.content-categories-sidebar {
+  padding: em(18px);
+}
+
+.content-category-type {
+  background: $optimadmin-deep-purple;
+  border: 1px solid $optimadmin-pale-purple;
+  color: $optimadmin-original-white;
+  font-size: em(12px);
+  letter-spacing: 1px;
+  margin: 0 0 em(15px, 12px);
+  padding: em(5px, 12px);
+  text-transform: uppercase;
+
+  @include responsive-to(large) {
+    text-align: center;
+  }
+}
+
+.content-category-list {
+  list-style: none;
+
+  @include responsive-to(medium-down) {
+    margin: 0 0 em(10px, 12px);
+  }
+
+  @include responsive-to(large) {
+    margin: 0 0 em(30px, 12px);
+  }
+
+  a {
+    border-bottom: 1px solid $optimadmin-pale-purple;
+    color: $optimadmin-original-white;
+    display: block;
+    font-size: em(12px);
+    margin: em(2px, 12px) 0;
+    padding: em(5px, 12px) em(5px, 12px) em(5px, 12px) em(12px, 12px);
+    text-decoration: none;
+    transition: all .25s;
+
+    &:link,
+    &:visited {
+      color: $optimadmin-original-white;
+    }
+
+    &:hover,
+    &:active {
+      color: $optimadmin-green;
+      border-bottom-color: $optimadmin-gold;
+    }
+  }
+}

@@ -1,0 +1,51 @@
+@import '../lib/mixins', '../lib/variables';
+
+.flash-wrap {
+  max-width: 62.5em;
+}
+
+.flash-message {
+  border-style: solid;
+  border-width: 1px;
+  cursor: pointer;
+  font-size: em(15px);
+  margin: em(18px) em(18px) 0;
+  padding: em(4px, 15px) em(6px, 15px);
+
+  &.inline {
+    display: inline-block;
+    margin: em(5px, 15px) 0;
+  }
+
+  &.notice {
+    background: $optimadmin-original-green;
+    border-color: $optimadmin-original-pale-green;
+    color: $optimadmin-original-white;
+  }
+
+  &.alert,
+  &.error {
+    background: $optimadmin-original-purple;
+    border-color: $optimadmin-original-pale-purple;
+    color: $optimadmin-original-white;
+    font-weight: bold;
+  }
+}
+
+.error_messages,
+#error_explanation {
+  background: $optimadmin-original-purple;
+  border-color: $optimadmin-original-pale-purple;
+  border-style: solid;
+  border-width: 1px;
+  color: $optimadmin-original-white;
+  font-size: em(15px);
+  font-weight: bold;
+  margin: em(5px, 15px) 0;
+  padding: em(4px, 15px) em(6px, 15px);
+
+  h2 {
+    font-size: em(16px);
+    font-weight: normal;
+  }
+}

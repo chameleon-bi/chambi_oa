@@ -1,0 +1,16 @@
+[
+<% NavigationLinks.to_a.each do |navigation_item| %>
+  { text: '<%= navigation_item[0] %>', menu: [
+    <% model_item = FindLinkResources.new(navigation_item[1]).tiny_mce %>
+
+    <% if model_item.present? %>
+      <% model_item.each do |item| %>
+        <% next if MenuItemDestinationEvaluator.new(view_template: self, menu_resource: item, admin: true).tinymce_destination.blank? %>
+        <%= raw "{text: '#{item.try(:name) || item.try(:title) || item.try(:address_fields)}', value: '#{MenuItemDestinationEvaluator.new(view_template: self, menu_resource: item, admin: true).tinymce_destination}' }," %>
+      <% end.join(', ') %>
+    <% else %>
+      { text: 'None', value: '#' }
+    <% end %>
+  ]},
+<% end %>
+]

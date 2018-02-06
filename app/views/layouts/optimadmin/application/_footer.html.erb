@@ -1,0 +1,30 @@
+<footer <%= "class=hide" if cookies[:optimadmin_iframe].present? %>>
+  <div class="float-left">
+    <ul class="footer-links footer-info">
+      <li>
+        <%= link_to 'Site Structure', menu_items_path %>
+      </li>
+
+      <li>
+        <%= link_to 'Stored Documents', documents_path %>
+      </li>
+
+      <li>
+        <%= link_to 'Stored Images', images_path %>
+      </li>
+
+      <% # TODO: Add these in %>
+      <!--
+      <li>
+        <%=
+        link_to 'Help Guides (coming soon)', '#'
+        %>
+      </li>
+      -->
+    </ul>
+  </div>
+
+  <div class="float-right">
+    <%= link_to ( image_tag 'optimadmin/logo.png', alt: 'Optimised Admin System', width: 220, height: 54 ), root_url %>
+  </div>
+</footer>

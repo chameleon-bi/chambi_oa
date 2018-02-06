@@ -1,0 +1,7 @@
+<% flash.each do |name, msg| %>
+  <%= content_tag :div, msg, class: "flash-message #{name}" %>
+<% end %>
+
+<%= form_for @external_link, html: { class: 'external-link-form' } do |f| %>
+  <%= render 'optimadmin/external_links/form_fields', f: f %>
+<% end %>

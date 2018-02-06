@@ -1,0 +1,35 @@
+@import '../lib/mixins', '../lib/variables';
+.logged-out {
+  background: $optimadmin-original-pale-green;
+
+  h1 {
+    font-size: em(20px);
+    margin-left: em(15px, 20px);
+    text-transform: uppercase;
+  }
+
+  header {
+    background: $optimadmin-original-white;
+    margin-bottom: em(30px);
+  }
+
+  input[type='submit'] {
+    margin-left: em(15px);
+  }
+
+  .fields {
+    background: $optimadmin-original-white;
+    //-webkit-box-shadow: 0 0 5px -1px rgba(0,0,0,0.75);
+    //-moz-box-shadow: 0 0 5px -1px rgba(0,0,0,0.75);
+    box-shadow: 0 0 5px -1px rgba(0, 0, 0, .75);
+    padding: em(15px);
+  }
+
+  p {
+    font-size: em(11px);
+  }
+
+  .actions {
+    margin-top: 0;
+  }
+}

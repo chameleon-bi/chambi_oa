@@ -1,0 +1,18 @@
+<%#= f.hidden_field :menu_item_id unless @menu_item.new_record? %>
+
+<div class="field resource-type-select" data-url="<%= update_link_resources_menu_items_path %>">
+  <%= f.label :menu_resource_type %>
+  <%= f.select :menu_resource_type, NavigationLinks.to_a.sort_by!{ |n| n[0].downcase }, prompt: 'Please select' %>
+</div>
+
+<% if @menu_item.link.menu_resource_type.present? %>
+  <div class="field">
+    <%= f.label :menu_resource_id %>
+    <%= f.select :menu_resource_id, options_for_select(@link_resources, selected: @menu_item.link.menu_resource_id), {}, { prompt: 'Please select', class: 'searchable-select' } %>
+  </div>
+<% else %>
+  <div class="field">
+    <%= f.label :menu_resource_id %>
+    <%= f.select :menu_resource_id, [''], {}, class: 'searchable-select' %>
+  </div>
+<% end %>

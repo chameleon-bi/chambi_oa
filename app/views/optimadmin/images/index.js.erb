@@ -1,0 +1,1 @@
+[<%= raw @images.map{|image| "{title: '#{image.name} (#{image.image.url.split('/').last})', value: '#{image.image.url}'}"}.join(', ') %>]

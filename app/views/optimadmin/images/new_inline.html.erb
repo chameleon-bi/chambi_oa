@@ -1,0 +1,134 @@
+<html>
+  <head>
+    <style>
+      body {
+        margin: 20px 0 0;
+        width: 483px;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 14px;
+      }
+
+      form {
+        margin: 0;
+      }
+
+      .field {
+        margin: 10px 20px !important;
+        width: 463px !important;
+        height: 30px !important;
+      }
+
+      .field_with_errors {
+        display: inline;
+      }
+
+      .field label {
+        display: inline-block;
+        height: 30px;
+        line-height: 28px;
+        width: 112px;
+        overflow: hidden;
+        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+        vertical-align: top;
+      }
+
+      .field input {
+        display: inline-block;
+        margin: 0;
+        padding: 0 4px;
+        outline: 0;
+        width: 331px;
+        height: 28px;
+        border: 1px solid #C5C5C5;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+        color: #000000;
+        transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 14px;
+        vertical-align: top;
+      }
+
+      .field .field_with_errors input {
+        border-color: #b21b1b;
+      }
+
+      .text-field input:focus {
+        border-color: #86cccc;
+      }
+
+      .actions-outer {
+        border-top: 1px solid #DDDDDD;
+        border-radius: 0 0 6px 6px;
+        height: 50px;
+        width: 483px;
+        background-color: #fff;
+        text-align: right;
+      }
+
+      .actions-inner {
+        display: inline-block;
+        margin: 10px;
+        height: 30px;
+      }
+
+      .actions-inner input {
+        border: 0;
+        display: inline-block;
+        width: 73px;
+        height: 30px;
+
+        vertical-align: top;
+        font-size: 14px;
+        cursor: pointer;
+        color: #FFFFFF;
+
+        text-transform: uppercase;
+        background-color: #2d8ac7;
+      }
+
+      .actions-inner input:hover,
+      .actions-inner a:hover {
+        background: #86cccc;
+      }
+
+      .actions-inner a {
+        display: inline-block;
+
+        width: 64px;
+        height: 30px;
+
+        line-height: 30px;
+        text-decoration: none;
+        text-align: center;
+        color: #333333;
+        text-transform: uppercase;
+
+        background-color: #f0f0f0;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <%= form_for @image, :url => create_inline_images_path, :html => {:multipart => true} do |f| %>
+      <div class="field text-field">
+        <%= f.label :name, 'Image name' %>
+        <%= f.text_field :name, required: true %>
+      </div>
+
+      <div class="field">
+        <%= f.label :image %>
+        <%= f.file_field :image, required: true %>
+        <%= f.hidden_field :image_cache %>
+      </div>
+
+      <div class="actions-outer">
+        <div class="actions-inner">
+          <%= f.submit 'Upload' %>
+          <%= link_to 'Cancel', '#', onclick: "parent.tinymce.activeEditor.windowManager.close()" %>
+        </div>
+      </div>
+    <% end %>
+
+  </body>
+</html>

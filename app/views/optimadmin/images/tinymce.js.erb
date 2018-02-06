@@ -1,0 +1,23 @@
+//$('#tinymce-image-thumbnails').slick('unslick');
+$('#tinymce-image-thumbnails, #tinymce-image-list').html('');
+  <% @images.each do |img| %>
+    <% if img.image.thumb.present? %>
+      $('#tinymce-image-thumbnails').append("<div><%= j image_tag img.image.thumb.url,
+                    class: 'acceptable-image',
+                    data: {
+                      path: img.image.url,
+                      name: img.name,
+                      width: FastImage.size(img.image.file.file)[0],
+                      height: FastImage.size(img.image.file.file)[1]
+                    } %></div>");
+      $('#tinymce-image-list').append("<li><%= j link_to img.name, '#',
+                    class: 'acceptable-image',
+                    data: {
+                      path: img.image.url,
+                      name: img.name,
+                      width: FastImage.size(img.image.file.file)[0],
+                      height: FastImage.size(img.image.file.file)[1]
+                    } %></li>");
+    <% end %>
+  <% end %>
+//runSlick();

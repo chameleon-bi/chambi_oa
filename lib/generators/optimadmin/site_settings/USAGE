@@ -1,0 +1,8 @@
+Description:
+    Generates site settings within the application
+
+Example:
+    rails generate optimadmin:site_settings
+
+    This will update
+      app/controllers/application_controller.rb

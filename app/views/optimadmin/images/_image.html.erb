@@ -1,0 +1,31 @@
+<div class="row collapse module-list-index <%= cycle('odd', 'even') %>" data-equalizer="module-list">
+  <div class="large-5 small-4 columns" data-equalizer-watch="module-list">
+    <%= image.name %>
+  </div>
+
+  <div class="large-2 hide-for-medium-down columns" data-equalizer-watch="module-list">
+    <%= colorbox_preview(image, image.name) %>
+  </div>
+
+  <div class="large-2 hide-for-small columns" data-equalizer-watch="module-list">
+    <%= number_to_human_size(image.size * 1000) %>
+  </div>
+
+  <div class="large-1 small-4 columns text-center" data-equalizer-watch="module-list">
+    <%= link_to octicon('eye'), image.url, target: '_blank' %>
+  </div>
+
+  <div class="large-1 small-4 columns" data-equalizer-watch="module-list">
+    <%= edit_link(object: image) %>
+  </div>
+
+  <div class="large-1 hide-for-medium-down columns last" data-equalizer-watch="module-list">
+    <%= destroy_link(object: image) %>
+  </div>
+
+  <div class="row module-list-detail hide" id="index-list-<%= image.id %>">
+    <div class="small-12 columns module-list-summary last">
+      <%= image_tag image.url %>
+    </div>
+  </div>
+</div>

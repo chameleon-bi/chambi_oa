@@ -1,0 +1,97 @@
+/*
+READ ME
+
+This file has been modified as per:
+http://foundation.zurb.com/forum/posts/7483-equalizer-column-height-when-stacked-not-equalising
+
+/* Line  9         settings : {
+/* Line 10           use_tallest: true,
+/* Line 11           before_height_change: $.noop,
+/* Line 12           after_height_change: $.noop,
+/* Line 13  +        equalize_on_small: true /* default should be false */
+/* Line 14         },
+/* Line 42  +      if(settings.equalize_on_small === false){
+/* Line 43           if (isStacked) return;
+/* Line 44  +      };
+
+
+*/
+
+;(function ($, window, document, undefined) {
+  'use strict';
+
+  Foundation.libs.equalizer = {
+    name : 'equalizer',
+
+    version : '5.5.1',
+
+    settings : {
+      use_tallest : true,
+      before_height_change : $.noop,
+      after_height_change : $.noop,
+      equalize_on_stack : false,
+      equalize_on_small : true
+    },
+
+    init : function (scope, method, options) {
+      Foundation.inherit(this, 'image_loaded');
+      this.bindings(method, options);
+      this.reflow();
+    },
+
+    events : function () {
+      this.S(window).off('.equalizer').on('resize.fndtn.equalizer', function (e) {
+        this.reflow();
+      }.bind(this));
+    },
+
+    equalize : function (equalizer) {
+      var isStacked = false,
+          vals = equalizer.find('[' + this.attr_name() + '-watch]:visible'),
+          settings = equalizer.data(this.attr_name(true) + '-init');
+
+      if (vals.length === 0) {
+        return;
+      }
+      var firstTopOffset = vals.first().offset().top;
+      settings.before_height_change();
+      equalizer.trigger('before-height-change').trigger('before-height-change.fndth.equalizer');
+      vals.height('inherit');
+      vals.each(function () {
+        var el = $(this);
+        if(settings.equalize_on_small === false){
+          isStacked = true;
+        }
+      });
+
+      if (settings.equalize_on_stack === false) {
+        if (isStacked) {
+          return;
+        }
+      };
+
+      var heights = vals.map(function () { return $(this).outerHeight(false) }).get();
+
+      if (settings.use_tallest) {
+        var max = Math.max.apply(null, heights);
+        vals.css('height', max);
+      } else {
+        var min = Math.min.apply(null, heights);
+        vals.css('height', min);
+      }
+      settings.after_height_change();
+      equalizer.trigger('after-height-change').trigger('after-height-change.fndtn.equalizer');
+    },
+
+    reflow : function () {
+      var self = this;
+
+      this.S('[' + this.attr_name() + ']', this.scope).each(function () {
+        var $eq_target = $(this);
+        self.image_loaded(self.S('img', this), function () {
+          self.equalize($eq_target)
+        });
+      });
+    }
+  };
+})(jQuery, window, window.document);

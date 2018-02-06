@@ -1,0 +1,59 @@
+<%= form_for @administrator, html: { class: 'form-has-tabs' } do |f| %>
+  <%- if @administrator.errors.any? %>
+    <div class="error_messages">
+      <ul>
+        <%- for message in @administrator.errors.full_messages %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </div>
+
+  <div class="tabs prevent-flash">
+    <ul class="tab-list">
+      <li><a href="#tabs-1">Login details</a></li>
+      <li><a href="#tabs-2">More details</a></li>
+      <li><a href="#tabs-3">Role</a></li>
+      <li>
+        <%= link_to '#', class: 'destroy-tabs right', data: { class: 'tabs' } do %>
+          <%= octicon('chevron-down') %>
+        <% end %>
+      </li>
+    </ul>
+
+    <%= field_set_tag nil, id: 'tabs-1' do %>
+      <div class="field">
+        <%= f.label :email %>
+        <%= f.text_field :email %>
+      </div>
+    <% end %>
+
+    <%= field_set_tag nil, id: 'tabs-2' do %>
+      <div class="field">
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation %>
+      </div>
+    <% end %>
+
+    <%= field_set_tag nil, id: 'tabs-3' do %>
+      <div class="field">
+        <%= f.label :role %>
+        <%= f.select :role, Optimadmin::AdminAbility.roles(current_administrator).map{|x| [x.humanize, x]} %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

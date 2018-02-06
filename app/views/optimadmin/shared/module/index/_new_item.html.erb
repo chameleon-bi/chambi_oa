@@ -1,0 +1,5 @@
+  <% if can? :create, object %>
+    <%= link_to path, class: 'action-button' do %>
+      <%= octicon('plus') %> New <%= title %>
+    <% end %>
+  <% end %>

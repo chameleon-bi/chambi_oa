@@ -1,0 +1,126 @@
+// This is a manifest file that'll be compiled into application.js, which will include all the files
+// listed below.
+//
+// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
+// or any plugin's vendor/assets/javascripts directory can be referenced here using a relative path.
+//
+// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// compiled file.
+//
+// Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
+// about supported directives.
+//
+//= require jquery2
+//= require jquery_ujs
+//= require tinymce-jquery
+//= require optimadmin/vendor/jquery-ui
+// require optimadmin/vendor/tinymce/tinymce.min
+//= require optimadmin/vendor/foundation.min
+//= require optimadmin/components/navigation
+// require optimadmin/vendor/foundation.equalizer
+// require optimadmin/vendor/foundation.tooltip
+//= require optimadmin/vendor/image_crops/jquery.imgareaselect
+//= require optimadmin/vendor/image_crops/spectrum
+//= require optimadmin/vendor/fastclick
+//= require optimadmin/vendor/select2
+//= require optimadmin/vendor/slick.min
+//= require optimadmin/vendor/tinymce/plugins/mantimage/plugin
+//= require optimadmin/vendor/tinymce/plugins/mantlink/plugin
+//= require optimadmin/vendor/jquery.colorbox
+//= require optimadmin/vendor/datetimepicker
+//= require optimadmin/vendor/jquery.multi-select
+//= require optimadmin/vendor/jquery.quicksearch
+//= require optimadmin/load-plugins
+//= require optimadmin/load-tinymce
+function readCookie(n){n+='=';for(var a=document.cookie.split(/;\s*/),i=a.length-1;i>=0;i--)if(!a[i].indexOf(n))return a[i].replace(n,'');}
+
+function inIframe() {
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    return true;
+  }
+}
+
+if(inIframe() === true) {
+  function closeAndReload() {
+    top.location.reload();
+  }
+} else if(inIframe() === false && readCookie('optimadmin_iframe') == '1') {
+  $(document).ready(function() {
+    document.cookie = 'optimadmin_iframe=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
+    location.reload();
+  });
+}
+
+$(document).on("click", ".toggle-module-list-index, .alter-file-link", function(e) {
+  setTimeout(function() { equalHeight(); }, 50);
+});
+
+$(document).on("click", ".toggle-class", function(e) {
+  var toggleContainer = $(this).attr('data-container');
+  var toggleClass     = $(this).attr('data-class');
+  var dataReturn      = $(this).attr('data-return');
+
+  $(toggleContainer).toggleClass(toggleClass);
+
+  if (dataReturn === 'false') {
+    e.preventDefault();
+  }
+
+  if (Modernizr.mq('only screen and (min-width: 1024px)') && inIframe !== true) {
+    setTimeout(function() { equalHeight(); }, 50);
+  }
+});
+
+$(document).on('click', '.flash-message', function () {
+  $(this).parent().slideUp(250);
+});
+
+$(document).on('change', '.submit-on-change', function() {
+  $(this).closest('form').submit();
+});
+
+// Module index
+$(document).on('click', '.toggle-module-list-index', function() {
+  var container = $(this).attr('data-container');
+  var containerClass = $(this).attr('data-class');
+  var clickedClass = $(this).attr('data-this-class');
+
+  $('#' + container).toggleClass(containerClass);
+  $(this).find('.octicon').toggleClass(clickedClass);
+});
+
+
+$(document).ready(function() {
+  if($('.module-list-detail').length === 0) {
+    $('.index-list-expand-all').addClass('disabled');
+  }
+});
+
+$(document).on('click', '.index-list-expand-all', function() {
+  if($(this).hasClass('disabled')) {
+    return;
+  }
+
+  var container, containerClass, clickedClass = $(this).attr('data-this-class');
+
+  $(this).find('.octicon').toggleClass(clickedClass);
+
+  if ($(this).hasClass('clicked')) {
+    $(this).removeClass('clicked');
+
+    $('.toggle-module-list-index .octicon').addClass('octicon-chevron-down')
+                                           .removeClass('octicon-chevron-up');
+
+    $('.module-list-detail').addClass('hide');
+  } else {
+    $(this).addClass('clicked');
+
+    $('.toggle-module-list-index .octicon').removeClass('octicon-chevron-down')
+                                           .addClass('octicon-chevron-up');
+
+    $('.module-list-detail').removeClass('hide');
+  }
+  equalHeight();
+});

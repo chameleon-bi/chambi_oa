@@ -1,0 +1,29 @@
+<div class="row collapse">
+  <div class="medium-6 columns">
+    <div class="field">
+      <%= f.label :publish_at %>
+      <%= f.text_field :publish_at,
+                       class: 'datetimepicker',
+                       value: "#{f.object.publish_at.blank? ? "#{Time.zone.now.strftime("%d-%m-%Y %H:%M")}" : "#{f.object.publish_at.to_datetime.strftime("%d-%m-%Y %H:%M")}" }" %>
+    </div>
+  </div>
+  <div class="medium-6 columns">
+    <div class="field">
+      <%= f.label :expire_at %>
+      <%= f.text_field :expire_at,
+                       class: 'datetimepicker',
+                       value: "#{f.object.expire_at.present? ? "#{f.object.expire_at.to_datetime.strftime("%d-%m-%Y %H:%M")}" : '' }" %>
+    </div>
+  </div>
+</div>
+<!--
+<div class="field">
+  <%#= f.label :status %>
+  <%#= module_tooltip(
+      #'',
+      #''
+      #)
+  #%><br>
+  <%#= f.select :status, f.object.status.map{|x| raise x.to_yaml } %>
+</div>
+-->

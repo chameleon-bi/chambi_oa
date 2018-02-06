@@ -1,0 +1,27 @@
+@import '../lib/mixins', '../lib/variables';
+
+body {
+  color: $optimadmin-original-offset-black;
+  font-family: 'Open Sans', 'Arial', sans-serif;
+}
+
+a {
+  color: $optimadmin-original-deep-purple;
+  text-decoration: underline;
+  transition: color .1s;
+
+  &:link,
+  &:visited {
+    color: $optimadmin-original-deep-purple;
+  }
+
+  &:hover {
+    color: $optimadmin-original-purple;
+  }
+
+  &:active,
+  &:focus {
+    color: $optimadmin-original-pale-purple;
+    transition: color .1s;
+  }
+}

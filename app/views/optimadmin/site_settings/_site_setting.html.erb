@@ -1,0 +1,20 @@
+<div class="row collapse module-list-index <%= cycle('odd', 'even') %>" data-equalizer="module-list">
+  <div class="large-5 small-6 columns" data-equalizer-watch="module-list">
+    <%= site_setting.key %>
+  </div>
+
+  <div class="large-5 hide-for-medium-down columns" data-equalizer-watch="module-list">
+    <%= site_setting.value %>
+  </div>
+
+
+  <div class="large-<%= can?(:destroy, Optimadmin::SiteSetting) ? '1' : '2' %> small-6 columns text-center">
+    <%= edit_link(object: site_setting) %>
+  </div>
+
+  <% if can?(:destroy, Optimadmin::SiteSetting) %>
+    <div class="large-1 hide-for-medium-down columns last" data-equalizer-watch="module-list">
+      <%= destroy_link(object: site_setting) %>
+    </div>
+  <% end %>
+</div>

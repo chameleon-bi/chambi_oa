@@ -1,0 +1,43 @@
+<%= form_for(@site_setting) do |f| %>
+  <% if @site_setting.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@site_setting.errors.count, "error") %> prohibited this site setting from being saved:</h2>
+
+      <ul>
+      <% @site_setting.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= field_set_tag 'Site Settings' do %>
+
+    <div class="field">
+      <%= f.label :key %>
+      <% if can? :manage_keys, Optimadmin::SiteSetting %>
+        <%= f.text_field :key %>
+      <% else %>
+        <%= f.text_field :key, disabled: 'disabled' %>
+      <% end %>
+    </div>
+
+    <div class="field">
+      <%= f.label :value %>
+      <%= f.text_field :value %>
+    </div>
+
+    <% if Rails.env.development? %>
+      <div class="field">
+        <%= f.label :environment %>
+        <%= f.select :environment, options_for_select([['Development', 'development'], ['Production', 'production']], (@site_setting.environment if @site_setting)) %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+
+    <%= button_tag 'Save and Add Another', value: 'another' if current_administrator.role == 'master' && @site_setting.new_record? %>
+  </div>
+<% end %>

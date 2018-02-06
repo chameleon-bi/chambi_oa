@@ -1,0 +1,13 @@
+<div class="row collapse module-list-index <%= cycle('odd', 'even') %>" data-equalizer="module-list" id="item_<%= external_link.id %>">
+  <div class="large-10 small-5 columns" data-equalizer-watch="module-list">
+    <%= external_link.name %>
+  </div>
+
+  <div class="large-1 small-4 columns" data-equalizer-watch="module-list">
+    <%= edit_link(object: external_link) %>
+  </div>
+
+  <div class="large-1 hide-for-medium-down columns last" data-equalizer-watch="module-list">
+    <%= destroy_link(object: external_link) %>
+  </div>
+</div>

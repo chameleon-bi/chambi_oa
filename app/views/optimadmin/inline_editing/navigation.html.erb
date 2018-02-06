@@ -1,0 +1,24 @@
+<div class="optimadmin-menu">
+  <div class="optimadmin-menu-items">
+    <ul>
+      <li class="optimadmin-new-item">
+        <%= link_to 'Manage Content', '#' %>
+
+        <div class="optimadmin-module-list">
+
+        </div>
+      </li>
+
+      <%= content_tag :li, (link_to 'Edit this page', edit_polymorphic_url(@object), class: 'optimadmin-editable'), class: 'optimadmin-edit-item' if @object.present? %>
+    </ul>
+  </div>
+
+  <div class="optimadmin-menu-controls">
+    You are logged in as <%= current_administrator.username %>.
+    <%= link_to 'Logout', logout_path, class: 'optimadmin-remote-logout' %>
+  </div>
+</div>
+
+<div class="hide">
+  <%= render 'optimadmin/shared/sidebar/module_links' %>
+</div>

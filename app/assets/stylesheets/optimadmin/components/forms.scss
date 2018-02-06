@@ -1,0 +1,144 @@
+@import '../lib/mixins', '../lib/variables';
+
+label {
+  font-size: em(12px);
+  line-height: 1;
+}
+
+%action-button {
+  background: $optimadmin-original-pastel-green;
+  border: 0;
+  border-radius: 5px;
+  color: $optimadmin-original-white;
+  display: inline-block;
+  font-size: em(12px);
+  letter-spacing: 1px;
+  margin: 0 0 em(20px, 12px);
+  outline: none;
+  padding: em(10px, 12px);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all .25s;
+}
+
+.action-button {
+  @extend %action-button;
+
+  @include responsive-to(medium-down) {
+    font-size: em(14px);
+    margin: 0 0 em(10px, 14px);
+    padding: em(5px, 14px);
+  }
+
+  &:link,
+  &:visited {
+    color: $optimadmin-original-white;
+  }
+
+  &:hover,
+  &:active {
+    background: $optimadmin-original-green;
+  }
+}
+
+input[type='reset'],
+input[type='submit'],
+button {
+  @extend %action-button;
+  outline: none;
+  
+  &:hover {
+    background: darken($optimadmin-original-pastel-green, 5%);
+  }
+}
+
+
+.form-has-tabs {
+  input[name='commit'] {
+    margin: 0 em(20px);
+  }
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="week"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="time"],
+input[type="url"],
+input[type="color"],
+textarea {
+  &:focus {
+    outline: 1px solid $optimadmin-original-green;
+  }
+}
+
+legend {
+  color: $optimadmin-original-purple;
+  padding: 0 em(10px);
+}
+
+.search-form {
+  overflow: hidden;
+
+  button {
+    background: $optimadmin-original-purple;
+    border-radius: 0;
+    display: block;
+    height: 34px;
+    margin: 0;
+    padding: 0 em(10px);
+    text-align: center;
+    width: 100%;
+  }
+
+  .field,
+  .actions {
+    float: left;
+    margin-top: 0;
+  }
+}
+
+@include responsive-to(small) {
+  input[type='file'] {
+    width: 100%;
+  }
+}
+
+.document-field,
+.image-field {
+  border: 1px dotted $optimadmin-original-pastel-green;
+  margin: em(10px) 0;
+  padding: em(10px);
+
+  .action-button {
+    margin: 0;
+  }
+
+  .slick-image-selector {
+    margin: em(10px) em(20px);
+  }
+
+  .slick-slide {
+    opacity: .5;
+
+    &.slick-center {
+      opacity: 1;
+    }
+  }
+}
+
+
+.mce-edit-area.mce-container.mce-panel.mce-stack-layout-item {
+  border-width: 0 1px 0 0 !important;
+}
+
+.field_with_errors + br {
+  display: none;
+}

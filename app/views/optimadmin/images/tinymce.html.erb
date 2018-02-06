@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html> <!--<![endif]-->
+  <head>
+    <%= render 'layouts/optimadmin/shared/head' %>
+
+    <style>
+      body {
+        margin: 10px 25px;
+      }
+
+      .action-button {
+        margin: 0;
+      }
+
+      #tinymce-image-thumbnails,
+      #tinymce-image-list {
+        margin: 10px 0 0;
+        overflow: hidden;
+      }
+
+      #tinymce-image-list li {
+        float: left;
+        font-size: 14px;
+        margin-right: 3%;
+        width: 47%;
+      }
+
+      #tinymce-image-thumbnails div {
+        cursor: pointer;
+        display: inline-block;
+        margin: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <% if @images.present? %>
+      <div class="row collapse">
+        <div class="medium-8 columns">
+          <%= form_tag tinymce_images_path, method: :get, remote: true do %>
+            <%= text_field_tag :image_name, nil, placeholder: 'Enter image name to search', class: 'image-name-search' %>
+          <% end %>
+        </div>
+
+        <div class="medium-4 columns text-right">
+          <%= link_to 'View as list', '#', class: 'view-as-list action-button' %>
+          <%= link_to 'View as thumbnails', '#', class: 'view-as-images action-button', style: 'display: none;' %>
+        </div>
+      </div>
+
+      <div id="tinymce-image-thumbnails"></div>
+
+      <ul id="tinymce-image-list"></ul>
+    <% else %>
+      <p>There are no images in Stored Images.</p>
+
+      <p>As you upload images to your website, they will appear here so you can select them to use again.</p>
+    <% end %>
+
+    <script>
+    	$(document).on('click', '.view-as-list', function() {
+        $('.view-as-list, #tinymce-image-thumbnails').hide();
+        $('.view-as-images, #tinymce-image-list').show();
+      });
+
+    	$(document).on('click', '.view-as-images', function() {
+        $('.view-as-list, #tinymce-image-thumbnails').show();
+        $('.view-as-images, #tinymce-image-list').hide();
+      });
+
+      $(document).ready(function() {
+        $('.view-as-images, #tinymce-image-list').hide();
+        $('.image-name-search').parent().submit();
+      });
+
+    	$(document).on('click', '.acceptable-image', function() {
+    		parent.$('.mce-image-url-input input').val($(this).data('path'));
+        parent.$('.mce-image-alt-input').val($(this).data('name'));
+        parent.$('.mce-image-width-input').val($(this).data('width'));
+        parent.$('.mce-image-height-input').val($(this).data('height'));
+        //parent.tinyMCE.activeEditor.execCommand('mceInsertContent', false, '<p>test</p>')
+    		parent.tinymce.activeEditor.windowManager.close();
+    	});
+
+      $(document).on('keyup', '.image-name-search', function() {
+        $(this).parent().submit();
+      });
+
+      function runSlick() {
+        $('#tinymce-image-thumbnails').slick({
+          infinite: false,
+          slidesToShow: 8,
+          slidesToScroll: 8
+        });
+      }
+
+      //runSlick();
+    </script>
+  </body>
+</html>

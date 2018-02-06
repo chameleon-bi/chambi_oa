@@ -1,0 +1,42 @@
+<% if cookies[:optimadmin_iframe].present? %>
+  <%= content_for :head do %>
+    <script>
+      $(function(){
+        closeAndReload();
+      });
+    </script>
+  <% end %>
+<% end %>
+<div class="row">
+  <div class="large-4 small-12 large-centered columns">
+    <h1><%= global_site_settings['Name'] %></h1>
+
+    <%= form_tag administrator_sessions_path do %>
+      <div class="fields">
+        <p>Please enter your username (or email address) and password to access the admin.</p>
+
+        <div class="field">
+          <%= label_tag :login_name, 'Email or Username' %>
+          <%= text_field_tag :login_name, params[:login_name], autocorrect: 'off', autocapitalize: 'off', spellcheck: 'false', required: 'true' %>
+        </div>
+
+        <div class="field">
+          <%= label_tag :password %>
+          <%= password_field_tag :password, nil, required: 'true' %>
+        </div>
+
+
+        <div class="field">
+          <%= label_tag :remember_me, 'Remember me', class: 'inline-label' %>
+          <%= check_box_tag :remember_me, 1, params[:remember_me] %>
+        </div>
+      </div>
+
+      <div class="actions">
+        <%= submit_tag 'Log In' %>
+      </div>
+    <% end %>
+
+    <p class="float-right"><%= link_to 'Forgotten password?', new_password_reset_path, id: 'forgot-password' %></p>
+  </div>
+</div>

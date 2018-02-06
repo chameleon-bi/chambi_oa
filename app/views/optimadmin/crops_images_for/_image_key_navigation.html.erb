@@ -1,0 +1,44 @@
+<table class="image-crops-table" id="image-crops-table">
+  <tbody>
+    <tr class="image-grid">
+      <% @current_image_versions.each_pair do |key, image| %>
+        <% next if key.to_s == 'thumb' %>
+          <td class="nav_<%= key %>">
+            <% if image[:width] > image[:height] %>
+              <%= link_to(
+                    image_tag( "#{@current_image.send(key)}?#{Time.now.to_i}", {
+                      style: image[:width] > 150 ? "max-width: 150px" : "",
+                      id: "nav_#{key}"
+                    } ),
+                    '#image-crops-table',
+                    class: 'image-key-navigation',
+                    data: { key: key }
+                  ) %>
+            <% else %>
+              <%= link_to(
+                      image_tag( "#{@current_image.send(key)}?#{Time.now.to_i}", {
+                        style: image[:height] > 150 ? "max-height: 150px" : "",
+                        id: "nav_#{key}"
+                      } ),
+                      '#image-crops-table',
+                      class: 'image-key-navigation',
+                      data: { key: key }
+                    ) %>
+            <% end %>
+          </td>
+
+      <% end %>
+    </tr>
+
+    <tr>
+      <% @current_image_versions.each_pair do |key, image| %>
+        <% next if key.to_s == 'thumb' %>
+        <td class="nav_<%= key %>"><%= link_to key.to_s.titleize, '#image-crops-table', class: 'image-key-navigation', id: "#{key}-crop", data: { key: key } %></td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
+
+<p class="image-crops-hint">
+  Please click on an image above to change the crop.
+</p>

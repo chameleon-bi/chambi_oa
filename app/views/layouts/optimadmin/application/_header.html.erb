@@ -1,0 +1,45 @@
+<header <%= "class=hide" if cookies[:optimadmin_iframe].present? %>>
+  <div class="float-left show-for-large generic-links">
+    <ul class="clearfix">
+      <% if can? :manage, Optimadmin::MenuItem %>
+        <li>
+            <%= link_to 'Site Navigation', menu_items_path, class: active_class(menu_items_path) %>
+        </li>
+      <% end %>
+
+      <li>
+        <%= link_to 'Stored Images', images_path, class: active_class(images_path) %>
+      </li>
+
+      <li>
+        <%= link_to 'Stored Documents', documents_path, class: active_class(documents_path) %>
+      </li>
+
+      <li>
+        <% if can? :manage, Optimadmin::SiteSetting %>
+          <%= link_to 'Site Settings', site_settings_path, class: active_class(site_settings_path) %>
+        <% else %>
+          <% # TODO: Make this work %>
+          <%#= link_to 'Help', '#' %>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+
+  <div class="float-right show-for-large generic-links">
+    <ul class="clearfix">
+      <li><%= link_to 'View Website', main_app.root_url, target: '_blank' %></li>
+
+      <li><%= link_to 'Manage Administrators', administrators_path %></li>
+      <% if can? :manage, Optimadmin::ModulePage %>
+        <li>
+          <%= link_to 'Module Pages', module_pages_path %>
+        </li>
+      <% end %>
+
+      <li>
+        <%= link_to 'Logout', logout_path, title: "You're currently logged in as #{current_administrator.username}." %>
+      </li>
+    </ul>
+  </div>
+</header>

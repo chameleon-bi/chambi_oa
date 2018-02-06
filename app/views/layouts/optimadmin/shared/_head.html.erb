@@ -1,0 +1,22 @@
+<title>Optimadmin</title>
+
+<%= stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Open+Sans' %>
+<%= stylesheet_link_tag  'optimadmin/application', media: 'all' %>
+<%= stylesheet_link_tag  'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css', media: 'all' %>
+
+<%= javascript_include_tag 'optimadmin/vendor/modernizr' %>
+<%= javascript_include_tag 'optimadmin/application' %>
+<%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.6.0/jquery.matchHeight-min.js' %>
+
+<%= csrf_meta_tags %>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--[if lt IE 9]>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+  <script src="http://s3.amazonaws.com/nwapi/nwmatcher/nwmatcher-1.2.5-min.js"></script>
+  <script src="http://html5base.googlecode.com/svn-history/r38/trunk/js/selectivizr-1.0.3b.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.1.0/respond.min.js"></script>
+<![endif]-->
+
+<%= yield :head %>

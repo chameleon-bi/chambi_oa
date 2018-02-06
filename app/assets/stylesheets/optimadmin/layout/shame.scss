@@ -1,0 +1,41 @@
+@import '../lib/mixins', '../lib/variables';
+// Let's be kind to the poor IE8 souls
+.ie8 {
+  .octicon {
+    font-family: "Open Sans", Arial, sans-serif;
+
+    &.octicon-chevron-down:before {
+      content: 'Down';
+    }
+
+    &.octicon-chevron-up:before {
+      content: 'Up';
+    }
+
+    &.octicon-eye:before {
+      content: 'View';
+    }
+
+    &.octicon-pencil:before {
+      content: 'Edit';
+    }
+
+    &.octicon-trashcan:before {
+      content: 'Delete';
+    }
+  }
+}
+
+// IE10 +
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .top-level:first-of-type a {
+    margin-top: 1px;
+  }
+}
+
+.ie8,
+.ie9 {
+  .top-level:first-of-type a {
+    margin-top: 1px;
+  }
+}

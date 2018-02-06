@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render 'layouts/optimadmin/shared/head' %>
+  </head>
+
+  <body class="logged-out">
+    <%= render 'layouts/optimadmin/logged_out/header' %>
+
+    <% if flash.present? %>
+      <div class="row">
+        <div class="large-4 large-centered text-center columns">
+          <%= render 'optimadmin/shared/flash_messages', locales: { flash: flash } %>
+        </div>
+      </div>
+    <% end %>
+
+    <%= yield %>
+
+    <%= render 'layouts/optimadmin/logged_out/footer' %>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+@import '../../lib/mixins', '../../lib/variables';
+
+.back {
+  a {
+    background: $optimadmin-slate-blue;
+    border-radius: 5px;
+    color: $optimadmin-original-white;
+    display: inline-block;
+    font-size: em(12px);
+    letter-spacing: 1px;
+    margin: 0 0 em(16px);
+    padding: em(7px, 12px);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all .25s;
+
+    &:link,
+    &:visited,
+    &:hover,
+    &:active {
+      color: $optimadmin-original-white;
+    }
+
+    &:hover {
+      background: $optimadmin-deep-purple;
+    }
+  }
+}
+
+.enable-tabs {
+  background: $optimadmin-original-pastel-purple;
+  color: $optimadmin-original-white;
+  display: inline-block;
+  padding: em(5px);
+  text-decoration: none;
+
+  @include responsive-to(medium-down) {
+    font-size: em(12px);
+  }
+
+  &:link,
+  &:visited {
+    color: $optimadmin-original-white;
+  }
+
+  &:hover,
+  &:active {
+    background: $optimadmin-original-purple;
+    color: $optimadmin-original-white;
+  }
+}
+
+@include responsive-to(large) {
+  .tabs {
+    &.prevent-flash {
+      visibility: hidden;
+    }
+  }
+}
+
+.field_with_errors {
+  label {
+    color: $optimadmin-original-error-red;
+    font-weight: bold;
+  }
+
+  input,
+  textarea,
+  select {
+    border: 1px solid $optimadmin-original-error-red;
+  }
+}

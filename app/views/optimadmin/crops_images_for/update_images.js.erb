@@ -1,0 +1,19 @@
+$("#image_<%= @key %>").attr('src', "<%= "#{@current_image.send(@key)}?#{Time.now.to_i}" %>");
+
+$('#<%= @key %>_message').attr('style', '').html('<div class="flash-message inline notice">Crop successfuly saved!</div>');
+
+$("#nav_<%= @key %>").replaceWith("<%= escape_javascript(
+  if @current_image_file[:width] > @current_image_file[:height]
+    image_tag( "#{@current_image.send(@key)}?#{Time.now.to_i}", {
+      style: @current_image_file[:width] > 150 ? "max-width: 150px" : "",
+      id: "nav_#{@key}",
+      class: "highlight"
+    } )
+  else
+    image_tag( "#{@current_image.send(@key)}?#{Time.now.to_i}", {
+      style: @current_image_file[:height] > 150 ? "max-height: 150px" : "",
+      id: "nav_#{@key}",
+      class: "highlight"
+    } )
+  end
+) %>");

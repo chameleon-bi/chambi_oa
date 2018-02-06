@@ -1,0 +1,4 @@
+<%= form_tag( {}, method: 'get' ) do %>
+  <%= hidden_field_tag :order, params[:order] %>
+  <%= select_tag :per_page, options_for_select(['25', '50', '100', '200'], params[:per_page]), include_blank: 'Per page', class: 'submit-on-change' %>
+<% end %>

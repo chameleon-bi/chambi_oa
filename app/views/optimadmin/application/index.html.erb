@@ -1,0 +1,19 @@
+<%= render 'optimadmin/shared/header/main_title', title: "Welcome to #{global_site_settings['Name']}" %>
+
+<div class="hide-for-small main-content" <%= 'style=min-height:2000px;' if @auth_token.present? %>>
+  <% if @auth_token.present? %>
+    <%= render partial: 'optimadmin/google_api/overview',
+               locals: {
+                 ga_profile: GA_PROFILE,
+                 ga_account_id: (defined?(GA_ACCOUNT_ID) ? GA_ACCOUNT_ID : nil),
+                 ga_web_property_id: (defined?(GA_WEB_PROPERTY_ID) ? GA_WEB_PROPERTY_ID : nil)
+               } %>
+  <% elsif GA_PROFILE.present? %>
+    <p>Google Analytics isn't loading right now.</p>
+  <% else %>
+    <p>Get in touch to find out how we can use this space to display details of your website traffic.</p>
+  <% end %>
+</div>
+<div class="main-content show-for-small-only">
+  <p>Please log in on a tablet or desktop computer to view your analytics.</p>
+</div>

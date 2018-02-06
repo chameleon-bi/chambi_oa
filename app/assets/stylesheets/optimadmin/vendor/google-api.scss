@@ -1,0 +1,37 @@
+// 'Borrowed' from https://ga-dev-tools.appspot.com/public/css/index.css
+.is-increasing {
+  -webkit-animation: increase 3s;
+  animation: increase 3s
+}
+.is-decreasing {
+  -webkit-animation: decrease 3s;
+  animation: decrease 3s
+}
+@-webkit-keyframes increase{
+  10% {
+    background-color: #eaffea;
+    border-color: hsla(120,100%,25%,.5);
+    color: hsla(120,100%,25%,1)
+  }
+}
+@keyframes increase{
+  10% {
+    background-color: #eaffea;
+    border-color: hsla(120,100%,25%,.5);
+    color: hsla(120,100%,25%,1)
+  }
+}
+@-webkit-keyframes decrease {
+  10% {
+    background-color: #ffeaea;
+    border-color: hsla(0,100%,50%,.5);
+    color: red;
+  }
+}
+@keyframes decrease{
+  10% {
+    background-color: #ffeaea;
+    border-color:hsla(0,100%,50%,.5);
+    color: red;
+  }
+}

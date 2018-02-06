@@ -1,0 +1,41 @@
+<%= render 'optimadmin/shared/header/main_title', title: 'Site Settings' %>
+
+<div class="main-content">
+
+  <div class="row module-header collapse">
+    <%= render 'optimadmin/shared/module/index/new_item', title: 'Site Setting', object: Optimadmin::SiteSetting, path: new_site_setting_path %>
+    <%= render 'optimadmin/shared/search_form' %>
+    <%= render 'optimadmin/shared/module/index/pagination' %>
+    <%= render 'optimadmin/shared/module/index/order', options: [['Name', 'name']] %>
+    <% if Rails.env.development? && can?(:create, Optimadmin::SiteSetting) %>
+      <%= form_tag( {}, method: 'get' ) do %>
+        <%= select_tag :environment, options_for_select([['Development', 'development'], ['Production', 'production']], params[:environment]), class: 'submit-on-change'  %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="row collapse module-list-index header">
+    <div class="large-5 small-6 columns">
+      Key
+    </div>
+
+    <div class="large-5 hide-for-medium-down columns">
+      Value
+    </div>
+
+
+    <div class="large-<%= can?(:destroy, Optimadmin::SiteSetting) ? '1' : '2' %> small-6 columns text-center">
+      Edit
+    </div>
+
+    <% if can?(:destroy, Optimadmin::SiteSetting) %>
+      <div class="large-1 hide-for-medium-down columns text-center last">
+        Delete
+      </div>
+    <% end %>
+  </div>
+
+  <%= render_object @site_settings %>
+
+  <%= paginate @site_settings %>
+</div>

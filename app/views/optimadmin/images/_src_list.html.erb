@@ -1,0 +1,5 @@
+<option value></option>
+<% @images.each do |image| -%>
+  <option value="<%= image.image.url %>"><%= image.name %></option>
+<% end -%>
+

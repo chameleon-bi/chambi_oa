@@ -1,0 +1,7 @@
+<% flash.each do |name, msg| %>
+  <%= content_tag :div, msg, class: "flash-message #{name}" %>
+<% end %>
+
+<%= form_for @module_page, remote: true do |f| %>
+  <% render 'optimadmin/module_pages/form_fields', f: f %>
+<% end %>

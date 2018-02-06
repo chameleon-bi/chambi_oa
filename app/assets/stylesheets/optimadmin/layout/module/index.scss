@@ -1,0 +1,183 @@
+@import '../../lib/mixins', '../../lib/variables';
+
+.module-header {
+  @include responsive-to(small) {
+    .action-button {
+      display: block;
+    }
+  }
+
+  form {
+    float: right;
+    width: auto;
+
+    @include responsive-to(small) {
+      width: 30%;
+    }
+
+    @include responsive-to(large) {
+      margin: 0 0 em(20px) em(20px);
+    }
+
+    @include responsive-to(medium-down) {
+      margin: 0 1.5% em(5px);
+      width: 25%;
+
+      button {
+        display: none;
+      }
+    }
+  }
+}
+
+.module-list-index {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-color: $optimadmin-original-grey;
+  border-right-style: solid;
+  border-right-width: 1px;
+  margin: 0;
+
+  @include responsive-to(large) {
+    border-left-style: solid;
+    border-left-width: 1px;
+  }
+
+  &.collapse .columns {
+    border-color: $optimadmin-original-grey;
+    overflow: hidden;
+    padding: em(5px, 14px);
+    text-overflow: ellipsis;
+
+    @include responsive-to(large) {
+      border-right-style: solid;
+      border-right-width: 1px;
+
+      &.last {
+        border-right: 0;
+      }
+    }
+
+    @include responsive-to(medium-down) {
+      border-bottom-style: dotted;
+      border-bottom-width: 1px;
+      border-left-style: solid;
+      border-left-width: 1px;
+    }
+  }
+
+  .drag-helper {
+    cursor: move;
+    display: inline-block;
+  }
+
+  &.header {
+    background: $optimadmin-slate-green;
+
+    &.odd,
+    &.even {
+      background: $optimadmin-slate-green;
+    }
+
+    .columns {
+      color: $optimadmin-white;
+      font-size: em(12px);
+    }
+
+    a {
+      color: $optimadmin-white;
+    }
+  }
+
+  &.collapse .module-list-summary {
+    border-top: 1px dotted $optimadmin-original-grey;
+
+    @include responsive-to(medium-down) {
+      border-bottom: 0;
+    }
+  }
+
+  &.odd {
+    background: $optimadmin-original-zebra-row;
+  }
+
+  &.collapse .module-list-additional-row {
+    border-color: $optimadmin-original-grey;
+    border-right: 0;
+    border-top-style: dotted;
+    border-top-width: 1px;
+    font-size: em(12px);
+    padding: 0;
+
+    .columns {
+      border: 0;
+    }
+  }
+}
+
+.menu-items-list .drag-helper {
+  display: none;
+}
+
+.no-results {
+  background: lighten($optimadmin-original-pale-green, 10%);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-color: $optimadmin-original-green;
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-style: solid;
+  border-right-width: 1px;
+  font-weight: bold;
+  margin: 0;
+  padding: em(5px);
+}
+
+.helper-link {
+  color: $optimadmin-original-deep-purple;
+  text-align: center;
+
+  .octicon {
+    margin: 0 em(10px) 0 0;
+  }
+
+  &:hover {
+    color: $optimadmin-original-pale-purple;
+  }
+
+  &.disabled {
+    opacity: .25;
+
+    &:hover,
+    &:focus {
+      color: $optimadmin-original-deep-purple;
+    }
+  }
+}
+
+.display {
+  &.false {
+    color: $optimadmin-original-deep-purple;
+    font-weight: 600;
+  }
+
+  &.true {
+    color: darken($optimadmin-original-green, 15%);
+  }
+}
+
+.ui-sortable {
+  .module-list-index:hover {
+    cursor: move;
+  }
+}
+
+.search-form {
+  input {
+    height: 34px;
+  }
+}
+
+.module-list-detail.row {
+  margin: 0 auto;
+}

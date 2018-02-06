@@ -1,0 +1,11 @@
+$('#menu_item_link_attributes_menu_resource_id option').remove();
+$('.searchable-select').select2({data: [{id: '', text: ''}]});
+
+<% if @link_resources.present? %>
+  <% @link_resources.each do |name, id| %>
+    $('#menu_item_link_attributes_menu_resource_id')
+         .append($("<option></option>")
+         .attr("value",<%= id %>)
+         .text('<%= j name %>'));
+  <% end %>
+<% end %>

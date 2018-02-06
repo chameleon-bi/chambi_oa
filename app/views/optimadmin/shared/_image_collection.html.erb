@@ -1,0 +1,14 @@
+<div id="<%= image %>">
+  <% stored_images.each do |stored_image| %>
+    <%= image_tag stored_image.image.thumb,
+                  class: 'image-select-list',
+                  data: {
+                    main_image_url: (request.protocol + request.host_with_port + stored_image.image.url),
+                    thumb_image_url: (request.protocol + request.host_with_port + stored_image.image.thumb.url),
+                    image_field_id: "#{f.object.class.to_s.underscore}_remote_#{image.to_s}_url",
+                    image_name: image
+                  } if stored_image.image.thumb.present? %>
+  <% end %>
+</div>
+
+<%#= link_to "Use Image", "#", id: "select-image", class: "set-image action-button", data: { image_field_id: "#{f.object.class.to_s.underscore}_remote_#{image.to_s}_url", image_name: image } %>

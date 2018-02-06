@@ -1,0 +1,5 @@
+<option value></option>
+<% @documents.each do |doc| -%>
+  <option value="<%= doc.document.url %>"><%= doc.name %></option>
+<% end -%>
+

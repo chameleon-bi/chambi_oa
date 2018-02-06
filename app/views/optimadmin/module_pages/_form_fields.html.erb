@@ -1,0 +1,29 @@
+<% if can? :manage, Optimadmin::ModulePage %>
+  <% if @module_page.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@module_page.errors.count, "error") %> prohibited this module_page from being saved:</h2>
+
+      <ul>
+      <% @module_page.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= field_set_tag 'Settings' do %>
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :route %><br>
+      <%= f.text_field :route %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

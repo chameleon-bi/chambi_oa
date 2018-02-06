@@ -1,0 +1,49 @@
+<ul>
+  <% menu_item_tree.each do |menu_item, menu_item_children| %>
+    <li class="menu-item" id="item_<%= menu_item.id %>">
+      <div class="module-list-index <%= cycle('odd', 'even') %>">
+        <div class="small-6 columns">
+          <span class="drag-helper"></span>
+
+          <%= link_to menu_item.name, edit_menu_item_path(menu_item) %>
+        </div>
+
+        <div class="small-3 columns">
+          <% unless menu_item.link.destination.blank? %>
+            <%= menu_item.link.menu_resource_type unless menu_item.link.destination.blank? %>
+          <% else %>
+            <span class="dead-link">Dead link</span>
+          <% end %>
+        </div>
+
+        <div class="small-1 text-center columns">
+          <% unless menu_item.link.destination.blank? %>
+            <%= link_to octicon('eye').html_safe, menu_item.link.destination, title: menu_item.link.menu_resource_type, class: 'menu-item-control', target: '_blank' %>
+          <% else %>
+            <span class="disabled">
+              <%= octicon('eye') %>
+            </span>
+          <% end %>
+        </div>
+
+        <div class="small-1 text-center columns">
+          <%= link_to octicon('pencil').html_safe, edit_menu_item_path(menu_item), class: 'menu-item-control' %>
+        </div>
+
+        <div class="small-1 text-center columns">
+          <% if menu_item.deletable? %>
+            <%= link_to octicon('trashcan').html_safe, menu_item_path(menu_item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'menu-item-control' %>
+          <% else %>
+            <span class="disabled"><%= octicon('trashcan') %></span>
+          <% end %>
+        </div>
+      </div>
+
+        <% unless menu_item_children.size.zero? %>
+          <ul>
+            <%= render partial: "menu_item_tree", locals: { menu_item_tree: menu_item_children } %>
+          </ul>
+        <% end %>
+    </li>
+  <% end %>
+</ul>

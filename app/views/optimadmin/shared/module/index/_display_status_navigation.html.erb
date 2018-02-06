@@ -1,0 +1,39 @@
+<%= content_for :footer do %>
+  <%= javascript_include_tag 'optimadmin/components/module/index.js' %>
+<% end %>
+
+<% additional_query_params = { } unless additional_query_params.present? %>
+
+<ul class="tabs-list module-index">
+  <li>
+    <%= link_to '#tabs-1',
+                data: { href: polymorphic_url(object, additional_query_params.merge({ per_page: params[:per_page], order: params[:order], search: params[:search] })) },
+                class: (current_page?(polymorphic_url(object)) ? 'active' : '') do %>
+      All (<%= @all_items.size %>)
+    <% end %>
+  </li>
+
+  <li>
+    <%= link_to '#tabs-2',
+                data: { href: polymorphic_url([:published, object], additional_query_params.merge({ per_page: params[:per_page], order: params[:order], search: params[:search] })) },
+                class: (current_page?(polymorphic_url([:published, object])) ? 'active' : '') do %>
+      Published (<%= @published_items.size %>)
+    <% end %>
+  </li>
+
+  <li>
+    <%= link_to '#tabs-3',
+                data: { href: polymorphic_url([:scheduled, object], additional_query_params.merge({ per_page: params[:per_page], order: params[:order], search: params[:search] })) },
+                class: (current_page?(polymorphic_url([:scheduled, object])) ? 'active' : '') do %>
+      Scheduled (<%= @scheduled_items.size %>)
+    <% end %>
+  </li>
+
+  <li>
+    <%= link_to '#tabs-4',
+                data: { href: polymorphic_url([:expired, object], additional_query_params.merge({ per_page: params[:per_page], order: params[:order], search: params[:search] })) },
+                class: (current_page?(polymorphic_url([:expired, object])) ? 'active' : '') do %>
+      Expired (<%= @expired_items.size %>)
+    <% end %>
+  </li>
+</ul>

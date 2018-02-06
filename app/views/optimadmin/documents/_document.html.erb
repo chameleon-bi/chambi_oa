@@ -1,0 +1,21 @@
+<div class="row collapse module-list-index <%= cycle('odd', 'even') %>" data-equalizer="module-list">
+  <div class="large-7 small-4 columns decorated-links" data-equalizer-watch="module-list">
+    <%= link_to document.name, document.url, target: '_blank' %>
+  </div>
+
+  <div class="large-2 hide-for-small columns" data-equalizer-watch="module-list">
+    <%= number_to_human_size(document.size * 1000) %>
+  </div>
+
+  <div class="large-1 small-4 columns text-center" data-equalizer-watch="module-list">
+    <%= link_to octicon('eye'), document.url, target: '_blank' %>
+  </div>
+
+  <div class="large-1 small-4 columns" data-equalizer-watch="module-list">
+    <%= edit_link(object: document) %>
+  </div>
+
+  <div class="large-1 hide-for-medium-down columns last" data-equalizer-watch="module-list">
+    <%= destroy_link(object: document) %>
+  </div>
+</div>

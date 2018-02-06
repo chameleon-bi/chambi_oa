@@ -1,0 +1,31 @@
+<li class="menu-item" id="item_<%= menu_item_presenter.menu_item.id %>">
+  <div class="module-list-index <%= cycle('odd', 'even') %>"  data-equalizer="module-list">
+    <div class="small-6 columns" data-equalizer-watch="module-list">
+      <span class="drag-helper"></span>
+      <%= menu_item_presenter.named_edit_link %>
+    </div>
+
+    <div class="small-3 columns" data-equalizer-watch="module-list">
+      <%= menu_item_presenter.menu_resource_type %>
+      <%= menu_item_presenter.menu_resource_name %>
+    </div>
+
+    <div class="small-1 text-center columns"  data-equalizer-watch="module-list">
+      <%= menu_item_presenter.show_link %>
+    </div>
+
+    <div class="small-1 text-center columns"  data-equalizer-watch="module-list">
+      <%= menu_item_presenter.octicon_edit_link %>
+    </div>
+
+    <div class="small-1 text-center columns" data-equalizer-watch="module-list">
+      <%= menu_item_presenter.delete_link %>
+    </div>
+  </div>
+
+  <% if sub_menu_items.present? %>
+    <%= content_tag :ul, class: "depth-#{ depth }" do %>
+      <%= nested_admin_menu_items(menu_items: sub_menu_items, depth: depth + 1) %>
+    <% end %>
+  <% end %>
+</li>

@@ -1,0 +1,11 @@
+<%= javascript_include_tag 'optimadmin/global/inline-editing' %>
+<script>
+  $(document).ready(function() {
+    <% if object %>
+      var optimadminModel = '<%= object.class %>';
+      var optimadminId = '<%= object.id %>';
+      adminInlineNavigationUrl = adminInlineNavigationUrl + '?model=' + optimadminModel + '&' + 'id=' + optimadminId;
+    <% end %>
+    $('.optimadmin-menu-bar').load(adminInlineNavigationUrl, menubarLoaded);
+  });
+</script>

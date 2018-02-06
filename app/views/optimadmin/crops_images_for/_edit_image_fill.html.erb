@@ -1,0 +1,211 @@
+<% number = rand(1..1000) %>
+<script type="text/javascript">
+  function <%= key %>_preview(img, selection) {
+    $('#<%= key %>_message').html('');
+
+    if (!selection.width || !selection.height) {
+      return;
+    } else {
+      $('#<%= key %>-cropped').hide();
+      $('#<%= key %>-preview').removeClass('hide');
+      $('#<%= key %>-preview-container').addClass('image-preview-container')
+      .removeClass('image-preview-container-default');
+    }
+
+    $('#<%= key %>-preview').css({
+      marginLeft: -Math.round(selection.x1),
+      marginTop: -Math.round(selection.y1)
+    });
+
+    $('#<%= key %>-preview-container').css({
+      width: Math.round(selection.width)+"px",
+      height: Math.round(selection.height)+"px",
+      marginTop: -Math.round(selection.height / 2)+"px",
+      marginLeft: -Math.round(selection.width / 2)+"px"
+    })
+
+    $('#<%= key %>-preview-pad-container').css({
+      width: Math.round(selection.width)+"px",
+      height: Math.round(selection.height)+"px",
+    })
+
+    if(parseInt($('#<%= key %>-preview-container').width()) > <%= image[:width] %>) {
+      $('#<%= key %>-preview-container').css({
+        //zoom: <%= image[:width] %> / Math.round(selection.width),
+        transform: "scale(" + <%= image[:width] %> / Math.round(selection.width) + ")"
+      });
+    } else if(parseInt($('#<%= key %>-preview-container').height()) > <%= image[:height] %>) {
+      $('#<%= key %>-preview-container').css({
+        //zoom: Math.round(selection.height) / <%= image[:height] %>,
+        transform: "scale(" + Math.round(selection.height) / <%= image[:height] %> + ")"
+      });
+    } else {
+      $('#<%= key %>-preview-container').css({
+        width: <%= image[:width] %>,
+        height: <%= image[:height] %>,
+        //zoom: 1,
+        transform: "scale(1)"
+      });
+    }
+
+    if(inIframe() !== true) {
+      equalHeight();
+    }
+  }
+
+  function <%= key %>_disableConstraints() {
+    $("#image_<%= key %>_original").imgAreaSelect({ remove: true });
+
+    $("#image_<%= key %>_original").imgAreaSelect({
+      imageWidth: '<%= @current_image_file[:width] %>',
+      imageHeight: '<%= @current_image_file[:height] %>',
+      handles: true,
+      parent: '#image-wrap-fill-<%= number %>',
+      onSelectChange: <%= key %>_preview,
+      onSelectEnd: function (img, selection) {
+        $("#<%= key %>_x1").val(selection.x1);
+        $("#<%= key %>_y1").val(selection.y1);
+        $("#<%= key %>_x2").val(selection.x2);
+        $("#<%= key %>_y2").val(selection.y2);
+        $("#<%= key %>_width").val(selection.width);
+        $("#<%= key %>_height").val(selection.height);
+      }
+    });
+
+    $('.<%= key %>_enable-constraints').removeClass('hide');
+    $('.<%= key %>_disable-constraints').addClass('hide');
+  }
+
+  function <%= key %>_enableConstraints() {
+    $("#image_<%= key %>_original").imgAreaSelect({ remove: true });
+
+    $("#image_<%= key %>_original").imgAreaSelect({
+      imageWidth: '<%= @current_image_file[:width] %>',
+      imageHeight: '<%= @current_image_file[:height] %>',
+      handles: true,
+      parent: '#image-wrap-fill-<%= number %>',
+      onSelectChange: <%= key %>_preview,
+      minWidth: <%= image[:width] %>,
+      minHeight: <%= image[:height] %>,
+      aspectRatio: '<%= width ||= image[:width] %>:<%= height ||= image[:height] %>',
+      onSelectEnd: function (img, selection) {
+        $("#<%= key %>_x1").val(selection.x1);
+        $("#<%= key %>_y1").val(selection.y1);
+        $("#<%= key %>_x2").val(selection.x2);
+        $("#<%= key %>_y2").val(selection.y2);
+        $("#<%= key %>_width").val(selection.width);
+        $("#<%= key %>_height").val(selection.height);
+      }
+    });
+
+    $('.<%= key %>_disable-constraints').removeClass('hide');
+    $('.<%= key %>_enable-constraints').addClass('hide');
+  }
+
+  $(document).on('click', '.<%= key %>_disable-constraints', function() {
+    <%= key %>_disableConstraints();
+    return false;
+  });
+
+  $(document).on('click', '.<%= key %>_enable-constraints', function() {
+    <%= key %>_enableConstraints();
+    return false;
+  });
+
+  $(document).ready(function () {
+    $('#<%= key %>-preview-pad-container').css({
+      width: <%= image[:width] %>,
+      height: <%= image[:height] %>
+    });
+
+
+    $("#<%= key %>_colorpicker").spectrum({
+      showInitial: true,
+      showInput: true,
+      preferredFormat: "hex",
+      change: function(color) {
+        $("#<%= key %>-preview-fill-container").css("background-color", color.toHexString());
+      }
+    });
+
+    <%= key %>_enableConstraints();
+  });
+</script>
+
+<% if params[:image_name] %>
+  <% url = { :action => 'update_image_fill', :id => params[:id], :key => key, :image_name => params[:image_name] } %>
+<% else %>
+  <% url = { :action => 'update_image_fill', :id => params[:id], :key => key } %>
+<% end %>
+
+
+<%= form_for key, { url: url, html: { id: "form_#{key}", class: 'invisible' }, remote: true }  do |f| %>
+  <div class="row collapse">
+    <div class="large-8 columns">
+      <h1><%= key.to_s.titleize %></h1>
+
+      <p>
+        The selection will be resized to fit within <strong><%= image[:width] %> x <%= image[:height] %> px</strong>,
+        any additional space will be padded with the colour chosen below.
+      </p>
+
+      <p>Draw your crop over the image to see a preview below.</p>
+    </div>
+  </div>
+
+  <div class="crop-action">
+    <div class="row collapse">
+      <div class="small-2 columns">
+        <p>
+          <%= f.label :background_colour %><br />
+          <%= f.text_field :background_colour, value: "#ffffff", id: "#{key}_colorpicker" %>
+        </p>
+      </div>
+
+      <div class="small-4 end columns">
+        <p>
+          <%= f.label 'Aspect ratio' %><br />
+          <%= link_to 'Unlock', '#', class: "#{key}_disable-constraints hide" %>
+          <%= link_to 'Lock', '#', class: "#{key}_enable-constraints hide" %>
+        </p>
+      </div>
+    </div>
+
+    <!-- <div style="width: <%= @current_image_file[:width] %>px;"> -->
+    <div>
+
+    <div id="image-wrap-fill-<%= number %>" class="image-wrap">
+      <%= image_tag "#{@current_image}?#{Time.now.to_i}", id: "image_#{key}_original", class: 'original-image' %>
+    </div>
+
+    <h2>Preview</h2>
+
+    <div id="<%= key %>-preview-fill-container" style="width:<%= image[:width] %>px; height:<%= image[:height] %>px;"  class="fill-preview-pad-container">
+      <div id="<%= key %>-preview-pad-container">
+        <div class='image-preview-container-default overflow-hidden'
+             id="<%= key %>-preview-container"
+             style="width:<%= image[:width] %>px; height:<%= image[:height] %>px;">
+            <!-- This is shown until a crop change is made, it's the default key -->
+            <%= image_tag "#{@current_image.send(key)}?#{Time.now.to_i}", id: "#{key}-cropped", class: 'image-cropped'  %>
+
+            <!-- This is the crop preview full image -->
+            <%= image_tag "#{@current_image}?#{Time.now.to_i}", id: "#{key}-preview", class: 'image-preview hide' %>
+        </div>
+      </div>
+    </div>
+
+    <div id="<%= key %>_message"></div>
+
+      <div class="actions">
+        <%= f.submit "Save '#{key.to_s.titleize}' Image Crop" %>
+      </div>
+    </div>
+  </div>
+
+  <%= f.hidden_field :x1 %>
+  <%= f.hidden_field :y1 %>
+  <%= f.hidden_field :x2 %>
+  <%= f.hidden_field :y2 %>
+  <%= f.hidden_field :width %>
+  <%= f.hidden_field :height %>
+<% end %>

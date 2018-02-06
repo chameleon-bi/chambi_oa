@@ -1,0 +1,13 @@
+<h1>EditImages#crop</h1>
+<p>Find me in app/views/optimadmin/edit_images/crop.html.erb</p>
+<h2>#instance</h2>
+<%= @klass_instance.methods %>
+<h2>#class</h2>
+<%= @klass_instance.class.methods %>
+<%#= @klass_instance.image.uploaders %>
+
+<%= @klass_instance.class.uploaders %>
+<%= debug(PageImageUploader.versions.first[1][:uploader].processors) %>
+<%= debug(PageImageUploader.versions.first[1][:uploader].method(:processors)) %>
+<%= debug(PageImageUploader.versions.first[1][:uploader].methods) %>
+<%= PageImageUploader.methods %>

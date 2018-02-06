@@ -1,0 +1,106 @@
+<%= content_for :head do %>
+  <%= javascript_include_tag 'optimadmin/components/stored_files_select' %>
+<% end %>
+
+<div class="image-field" id="container_<%= image.to_s %>">
+  <strong><%= f.label image, class: 'first-label' %></strong>
+
+  <% if f.object.send("#{image.to_s}?") %>
+    <br />
+
+    <% if f.object.errors.blank? %>
+      <div class="show-for-large">
+        <%= module_tooltip('Click the image to manage crops', 'This image has crops which appear on your website. Click on it to recrop those images.') %>
+      </div>
+
+      <table class="image-crops-table" id="image-crops-table">
+        <tbody>
+          <tr class="image-grid">
+            <% f.object.send(image).versions.each do |crop| %>
+              <% next if crop[0].to_s == 'thumb' %>
+              <td class="nav_<%= crop %>">
+                <%= media_edit_images(image_tag(f.object.send(image).send(crop[0].to_s).url, style: 'max-width: 150px; max-heigth: 150px;'), image.to_s, crop[0].to_s, { class: 'iframe-colorbox' }, colorbox: 1).call(f.object) %>
+              </td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <% f.object.send(image).versions.each do |crop| %>
+              <% next if crop[0].to_s == 'thumb' %>
+              <td class="nav_<%= crop %>">
+                <%= media_edit_images(crop[0].to_s.humanize, image.to_s, crop[0].to_s, { class: 'iframe-colorbox', style: 'max-width: 150px; max-heigth: 150px;' }, colorbox: 1).call(f.object) %>
+              </td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+    <% else %>
+    <div class="show-for-large">
+      <%= module_tooltip('Manage crops unavailable', 'You can only manage crops on items that have saved successfully.') %>
+    </div>
+
+      <%= image_tag f.object.send(image).thumb.url, id: "preview_#{image.to_s}"  %><br />
+    <% end %>
+
+    <% f.object.send(image).versions.each do |crop| %>
+      <%#= media_edit_images(f.object.send(image).send(crop[0].to_s).url, "image_name", image.to_s, class: 'iframe-colorbox').call(f.object) %>
+      <%#= it_edit_images(f.object.send(image).send(crop).url, "image_name", image.to_s, class: 'iframe-colorbox').call(f.object) %>
+    <% end %>
+
+
+    <p>
+      <%= link_to "Remove or replace", '#', class: 'toggle-class alter-file-link', data: { container: "#alter_#{image.to_s}", class: 'hide', return: 'false' } %>
+    </p>
+
+    <div id="alter_<%= image.to_s %>" class="hide">
+      <div class="row collapse">
+        <div class="small-4 columns">
+          <p>
+            <%= f.label image, 'Replace File' %>
+            <%= f.file_field image %>
+            <%= f.hidden_field "#{image.to_s}_cache" %>
+            <%= f.hidden_field "remote_#{image.to_s}_url" %>
+          </p>
+        </div>
+
+        <div class="small-4 end columns">
+          <p>
+            <%= f.label "remove_#{image.to_s}", 'Remove Image?' %>
+            <%= f.check_box "remove_#{image.to_s}" %>
+          </p>
+        </div>
+      </div>
+
+      <% if stored_images.present? %>
+        <p><%= link_to 'Select an image from Stored Images', '#', class: 'from-existing toggle-class', data: { container: "#optimadmin_images_for_#{image}", class: 'hide', return: 'false' } %></p>
+
+        <div id="optimadmin_images_for_<%= image %>" class="hide">
+          <%= render partial: 'optimadmin/shared/image_collection', locals: { image: image, f: f }  %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+
+    <p>
+      <%= f.label image, 'Upload File' %><br />
+      <%= f.file_field image %>
+      <%= f.hidden_field "#{image.to_s}_cache" %>
+      <%= f.hidden_field "remote_#{image.to_s}_url" %>
+    </p>
+
+    <% if stored_images.present? %>
+      <p><%= link_to 'Select an image from Stored Images', '#', class: 'from-existing toggle-class', data: { container: "#optimadmin_images_for_#{image}", class: 'hide', return: 'false' } %></p>
+
+      <div id="optimadmin_images_for_<%= image %>" class="hide">
+        <%= render partial: 'optimadmin/shared/image_collection', locals: { image: image, f: f }  %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% if options[:alt] -%>
+    <div class="field">
+      <%= f.label "#{image.to_s}_alt" %><br />
+      <%= f.text_field "#{image.to_s}_alt" %>
+    </div>
+  <% end -%>
+</div>

@@ -1,0 +1,88 @@
+@import '../lib/mixins', '../lib/variables';
+
+.image-crops-table {
+  td {
+    border: 1px solid $optimadmin-original-grey;
+    padding: em(4px);
+    text-align: center;
+  }
+
+  img {
+    border: 1px solid $optimadmin-original-offset-black;
+  }
+
+  .current-crop {
+    border: 4px solid $optimadmin-original-pastel-purple;
+  }
+
+  a {
+    display: block;
+  }
+}
+
+.image-grid {
+  height: 170px;
+}
+
+.crop-action {
+  .original-image,
+  .image-preview-container,
+  .image-cropped {
+    border: 1px solid $optimadmin-original-offset-black;
+  }
+
+  p {
+    margin: 0 0 em(10px);
+  }
+}
+
+.image-preview-container,
+.image-preview-container-default {
+  overflow: hidden;
+
+  img {
+    max-width: none;
+  }
+}
+
+.fill-preview-pad-container {
+  border: 1px solid $optimadmin-original-offset-black;
+  overflow: hidden;
+  position: relative;
+
+  .image-preview-container {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+  }
+
+  .image-cropped,
+  .image-preview-container {
+    border: 0;
+  }
+}
+
+.edit-versions-list {
+  display: inline-block;
+  margin: 0 0 em(15px);
+
+  li {
+    display: inline-block;
+    margin-right: em(10px);
+  }
+
+  .active {
+    text-decoration: none;
+  }
+}
+
+.image-select-list {
+  display: inline-block;
+  height: auto;
+  margin-right: 10px;
+  max-width: 100px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
